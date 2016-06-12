@@ -36,13 +36,14 @@ public:
 private:
    
     Scene    *m_scene;
-    std::vector<GameObject> m_gameObjectList;
+   
     
 public:
-    void setScene(Scene *scene);
+    void   setScene(Scene *scene);
     Scene* getScene();
-    void addObject(GameObject* object);
-    void update();
+    void   addObject(GameObject* object);
+    void   update();
+     std::vector<GameObject> m_gameObjectList;
 };
 
 

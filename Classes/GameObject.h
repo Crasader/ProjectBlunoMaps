@@ -26,6 +26,7 @@ public:
     void    setPosition(Vector2 position);
     Vector2 getPosition();
     void    setAvatar(const std::string& avatarFileName, float depth);
+    void    setAvatar(const std::string &avatarFileName, float depth, float opacity);
     Sprite* getAvatar();
     
     virtual void update() {}

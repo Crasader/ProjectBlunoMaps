@@ -46,12 +46,20 @@ bool MainScene::init()
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
     
-    //This is all going to be in World Load Level
-   
-    Grid *grid = new Grid();
+    //This is all going to be in World Load Level //thinking json or xml
+    Grid *grid = new Grid(Vector2(193.525162,383.001984), 39.93, 19.97);
     grid->setAvatar("Grid.png", 1.0f);
     grid->setPosition(Vector2(visibleSize.width/2 + origin.x, visibleSize.height/2 + origin.y));
     
+    Grid *tile = new Grid(Vector2(193.525162,383.001984), 60, 60);
+    tile->setAvatar("radiusTile.png", 1, 125);
+    Vector2 pt = grid->GetTileCoordCenterIso(63);
+    tile->setPosition(pt);
+    
+    Grid *tile2 = new Grid(Vector2(193.525162,383.001984), 60, 60);
+    tile2->setAvatar("radiusTile.png", 1, 125);
+    pt = grid->GetTileCoordCenterIso(7);
+    tile2->setPosition(pt);
     
     Actor *player = new Actor();
     player->setAvatar("stickman.png", 1.0f);
@@ -59,20 +67,22 @@ bool MainScene::init()
 
 
     World *world = World::getInstance();
-    world->addObject((GameObject*)grid);
-    world->addObject((GameObject*)player);
-
+    world->addObject(grid);
+    world->addObject(tile);
+    world->addObject(player);
+    world->addObject(tile2);
 
     //update loop updating game logic and all things that need update
-   // while(1)
-    //    world->update();
+    //world->update();
     
     return true;
 }
 
 bool MainScene::onTouchBegan(Touch* touch, Event* event)
 {
-    
+    World *world = World::getInstance();
+    world->m_gameObjectList[2].setPosition(touch->getLocation());
+    printf("x: %f, Y: %f", touch->getLocation().x, touch->getLocation().y);
     return true;
 }
 

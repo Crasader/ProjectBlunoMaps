@@ -12,18 +12,37 @@
 #include <stdio.h>
 #include "Defs.h"
 #include "GameObject.h"
+#include <vector>
 
 class Grid : public GameObject
 {
 private:
+    Vector2 m_startingPoint;
     int m_totalTiles;
     int m_grid[8][8];
+    float m_XLength;
+    float m_YLength;
     
 public:
     
-    Vector2 twoDtoIso(Vector2 position);
-    int     getTile(Vector2 position);
-    virtual void update(){int t =0;}
+    Grid(Vector2 startingPoint, float xLength, float yLength);
+    
+    Grid(Vector2 startingPoint, float xTransxLength, float xTransyLength, float yTransxLength, float yTransyLength);
+    
+    int     GetTileNumber(Vector2 position);
+    
+    /*
+    Vector2 AxisAlignedToIso(Vector2 position);
+    Vector2 GetTileCoordCenterP(int tileNumber);
+    Vector2 GetTileCoordStartP(int tileNumber);
+    */
+    
+    Vector2 GetTileCoordCenterIso(int tileNumber);
+    
+    
+    std::vector<int> GetSurrondingTiles(int tileNumber);
+    
+    virtual void update();
     ~Grid();
 };
 
