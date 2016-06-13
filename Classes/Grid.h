@@ -12,7 +12,7 @@
 #include <stdio.h>
 #include "Defs.h"
 #include "GameObject.h"
-#include <vector>
+#include <set>
 
 class Grid : public GameObject
 {
@@ -20,14 +20,16 @@ private:
     Vector2 m_startingPoint;
     int m_totalTiles;
     int m_grid[8][8];
+    
     float m_XLength;
     float m_YLength;
+    
+private:
+     std::set<int> getSurrondingTilesHelper( std::set<int>  &, int tileNumber, int radius, bool updown);
     
 public:
     
     Grid(Vector2 startingPoint, float xLength, float yLength);
-    
-    Grid(Vector2 startingPoint, float xTransxLength, float xTransyLength, float yTransxLength, float yTransyLength);
     
     int     GetTileNumber(Vector2 position);
     
@@ -37,13 +39,13 @@ public:
     Vector2 GetTileCoordStartP(int tileNumber);
     */
     
-    Vector2 GetTileCoordCenterIso(int tileNumber);
+    Vector2 getTileCoordCenterIso(int tileNumber);
     
     
-    std::vector<int> GetSurrondingTiles(int tileNumber);
+    std::set<int> getSurrondingTiles(int tileNumber, int radius);
     
     virtual void update();
-    ~Grid();
+    virtual ~Grid();
 };
 
 #endif /* defined(__ProjectBlunoMaps__Grid__) */

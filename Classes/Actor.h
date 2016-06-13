@@ -22,7 +22,7 @@ private:
 public:
     Actor(){}
     virtual void update();
-    // ~Actor();
+    virtual ~Actor();
 };
 
 #endif /* defined(__ProjectBlunoMaps__Actor__) */

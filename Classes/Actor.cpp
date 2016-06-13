@@ -14,3 +14,8 @@ void Actor::update()
     int j = 0;
     t = j;
 }
+
+Actor::~Actor()
+{
+    
+}

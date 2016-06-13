@@ -35,3 +35,24 @@ void World::update()
         it->update();
     }
 }
+
+void World::destroyWorld()
+{
+    delete m_instance;
+}
+
+
+World::~World()
+{
+    /*
+    std::vector<GameObject>::iterator it;
+    for(it = m_gameObjectList.begin(); it != m_gameObjectList.end(); ++it)
+    {
+        //remove from m_scene
+        
+        //delete object
+        delete &it;
+    }
+    m_gameObjectList.clear();
+    */
+}

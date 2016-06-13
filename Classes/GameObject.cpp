@@ -44,3 +44,8 @@ Sprite* GameObject::getAvatar()
 {
     return m_avatar;
 }
+
+GameObject::~GameObject()
+{
+    
+}

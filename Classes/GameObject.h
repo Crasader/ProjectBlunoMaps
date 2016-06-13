@@ -30,6 +30,8 @@ public:
     Sprite* getAvatar();
     
     virtual void update() {}
+    
+    virtual ~GameObject();
 };
 
 typedef std::shared_ptr<GameObject> MGameObject;

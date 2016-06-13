@@ -19,10 +19,10 @@ private:
     
     static World *m_instance;
     
-    //all constructors
     World(){}
     World(const World &){}
     World& operator=(const World &);
+    ~World();
    
 public:
     static World* getInstance()
@@ -32,7 +32,6 @@ public:
         return m_instance;
     }
     
-    
 private:
    
     Scene    *m_scene;
@@ -41,9 +40,13 @@ private:
 public:
     void   setScene(Scene *scene);
     Scene* getScene();
+    
     void   addObject(GameObject* object);
     void   update();
-     std::vector<GameObject> m_gameObjectList;
+    void   destroyWorld();
+    
+public:
+    std::vector<GameObject> m_gameObjectList;
 };
 
 

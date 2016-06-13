@@ -44,36 +44,40 @@ bool MainScene::init()
     
     Size visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
-
+    
+    World *world = World::getInstance();
     
     //This is all going to be in World Load Level //thinking json or xml
-    Grid *grid = new Grid(Vector2(193.525162,383.001984), 39.93, 19.97);
+    grid = new Grid(Vector2(193.525162,383.001984), 39.93, 19.97);
     grid->setAvatar("Grid.png", 1.0f);
     grid->setPosition(Vector2(visibleSize.width/2 + origin.x, visibleSize.height/2 + origin.y));
     
-    Grid *tile = new Grid(Vector2(193.525162,383.001984), 60, 60);
-    tile->setAvatar("radiusTile.png", 1, 125);
-    Vector2 pt = grid->GetTileCoordCenterIso(63);
-    tile->setPosition(pt);
+    world->addObject(grid);
     
-    Grid *tile2 = new Grid(Vector2(193.525162,383.001984), 60, 60);
-    tile2->setAvatar("radiusTile.png", 1, 125);
-    pt = grid->GetTileCoordCenterIso(7);
-    tile2->setPosition(pt);
+    std::set<int> tiles = grid->getSurrondingTiles(0, 3);
+    std::set<int>::iterator it;
+   
+    ytile = new Grid(Vector2(193.525162,383.001984), 60, 60);
+    ytile->setAvatar("yellowRadiusTile.png", 1, 125);
+    Vector2 pt = grid->getTileCoordCenterIso(0);
+    ytile->setPosition(pt);
+    world->addObject(ytile);
     
-    Actor *player = new Actor();
+    
+    for (it = tiles.begin(); it != tiles.end(); ++it)
+    {
+        Grid *tile = new Grid(Vector2(193.525162,383.001984), 60, 60);
+        tile->setAvatar("radiusTile.png", 1, 125);
+        Vector2 pt = grid->getTileCoordCenterIso(*it);
+        tile->setPosition(pt);
+        world->addObject(tile);
+    }
+    
+    player = new Actor();
     player->setAvatar("stickman.png", 1.0f);
     player->setPosition(Vector2(235,435));
 
-
-    World *world = World::getInstance();
-    world->addObject(grid);
-    world->addObject(tile);
     world->addObject(player);
-    world->addObject(tile2);
-
-    //update loop updating game logic and all things that need update
-    //world->update();
     
     return true;
 }
@@ -81,8 +85,17 @@ bool MainScene::init()
 bool MainScene::onTouchBegan(Touch* touch, Event* event)
 {
     World *world = World::getInstance();
-    world->m_gameObjectList[2].setPosition(touch->getLocation());
+    //world->m_gameObjectList[2].setPosition(touch->getLocation());
+    
+    //update loop updating game logic and all things that need update
+    //world->update();
+    
     printf("x: %f, Y: %f", touch->getLocation().x, touch->getLocation().y);
+    
+    int tile = grid->GetTileNumber(touch->getLocation());
+    Vector2 pt = grid->getTileCoordCenterIso(tile);
+    ytile->setPosition(pt);
+    //printf("\ntile: %d\n",tile);
     return true;
 }
 
