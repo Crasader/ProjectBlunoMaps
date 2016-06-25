@@ -14,6 +14,9 @@ private:
     Actor *player;
     Grid *ytile;
     
+    std::vector<Grid *> surroundingTiles;
+    
+    
 public:
     
     static cocos2d::Scene* createScene();

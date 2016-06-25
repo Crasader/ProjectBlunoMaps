@@ -22,6 +22,7 @@ private:
 public:
     Actor(){}
     virtual void update();
+    void move(float duration, Vector2 toPosition);
     virtual ~Actor();
 };
 

@@ -42,6 +42,9 @@ public:
     Scene* getScene();
     
     void   addObject(GameObject* object);
+    void   removeObject(GameObject* object);
+    
+    void   loadLevel(std::string);
     void   update();
     void   destroyWorld();
     

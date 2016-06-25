@@ -14,7 +14,7 @@
 
 class GameObject 
 {
-private:
+protected:
     
     Vector2   m_position;
     Sprite   *m_avatar;

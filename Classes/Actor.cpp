@@ -15,6 +15,16 @@ void Actor::update()
     t = j;
 }
 
+void Actor::move(float duration, Vector2 toPosition)
+{
+                   
+    
+    // Move a sprite to a specific location over duration.
+    auto moveTo = cocos2d::MoveTo::create(duration, toPosition);
+    m_avatar->runAction(moveTo);
+    m_position = toPosition;
+}
+
 Actor::~Actor()
 {
     
