@@ -124,7 +124,7 @@ int Grid::GetTileNumber(Vector2 tileCoord)
     return ((y * 8) + x);
 }
 
-void Grid::update()
+void Grid::update(Vector2 location)
 {
     int t =0;
 }

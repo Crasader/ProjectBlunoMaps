@@ -29,7 +29,7 @@ public:
     void    setAvatar(const std::string &avatarFileName, float depth, float opacity);
     Sprite* getAvatar();
     
-    virtual void update() {}
+    virtual void update(Vector2 ) {}
     
     virtual ~GameObject();
 };

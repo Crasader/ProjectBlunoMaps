@@ -1,4 +1,52 @@
 {
-    "project":"Bluno",
-    "stars":10
+    "Project": "BlunoMaps",
+    
+    "Level": "Test Level",
+    
+    
+    "Grid":
+    {
+        "image": "Grid.png",
+        "opacity":1.0,
+        "startingPtX":193.525162,
+        "startingPtY":383.001984,
+        "lenghtX":39.93,
+        "lenghtY":19.97,
+        "moveRadius":2
+    },
+    
+    "Player":
+    {
+        "image": "stickman.png",
+        "opacity":0.2,
+        "scaleX":1.0,
+        "scaleY":1.0,
+        "anchorPtX":0.5,
+        "anchorPtY":1.0,
+        "coord":0
+    },
+    
+    "Guards":
+    {
+        
+    },
+    
+    "Obstacles":
+    [
+              {
+              "image": "couch.png",
+              "opacity": 0.2,
+              "scaleX":0.3,
+              "scaleY":0.3,
+              "coord":53
+              },
+               {
+               "image": "couch.png",
+               "opacity": 1.0,
+               "scaleX":0.5,
+               "scaleY":0.5,
+               "coord":27
+               }
+    ]
 }
+

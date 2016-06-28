@@ -44,7 +44,7 @@ public:
     
     std::set<int> getSurrondingTiles(int tileNumber, int radius);
     
-    virtual void update();
+    virtual void update(Vector2);
     virtual ~Grid();
 };
 

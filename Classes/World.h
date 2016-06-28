@@ -13,6 +13,9 @@
 #include "Defs.h"
 #include "GameObject.h"
 
+class Grid;
+class Actor;
+
 class World
 {
 private:
@@ -35,7 +38,14 @@ public:
 private:
    
     Scene    *m_scene;
-   
+
+public:
+    Grid        *grid;
+    Actor       *player;
+    GameObject  *clickedTile;
+
+    std::vector<GameObject *> surroundingTiles;
+    std::vector<GameObject *> tabooTiles;
     
 public:
     void   setScene(Scene *scene);
@@ -45,7 +55,7 @@ public:
     void   removeObject(GameObject* object);
     
     void   loadLevel(std::string);
-    void   update();
+    void   update(Vector2 location);
     void   destroyWorld();
     
 public:

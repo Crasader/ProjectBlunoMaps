@@ -3,19 +3,8 @@
 
 #include "cocos2d.h"
 
-class Grid;
-class Actor;
-
 class MainScene : public cocos2d::Layer
 {
-    
-private:
-    Grid *grid;
-    Actor *player;
-    Grid *ytile;
-    
-    std::vector<Grid *> surroundingTiles;
-    
     
 public:
     

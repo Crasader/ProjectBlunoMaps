@@ -10,5 +10,15 @@
 #define __ProjectBlunoMaps__ActorController__
 
 #include <stdio.h>
+#include "Defs.h"
+
+class Actor;
+
+class ActorController
+{
+public:
+    void update(Actor &actor, Vector2 location);
+    
+};
 
 #endif /* defined(__ProjectBlunoMaps__ActorController__) */

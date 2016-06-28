@@ -7,3 +7,10 @@
 //
 
 #include "ActorController.h"
+#include "Actor.h"
+
+void ActorController::update(Actor &actor, Vector2 location)
+{
+    
+     
+}
