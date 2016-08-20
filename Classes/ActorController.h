@@ -17,7 +17,7 @@ class Actor;
 class ActorController
 {
 public:
-    void update(Actor &actor, Vector2 location);
+   virtual void update(Actor &actor, Vector2 location) = 0;
     
 };
 

@@ -8,3 +8,9 @@
 
 #include "GameStateManager.h"
 
+GameStateManager* GameStateManager::m_instance = NULL;
+
+int GameStateManager::getState()
+{
+    return m_gameState;
+}

@@ -22,7 +22,7 @@ private:
     
     static World *m_instance;
     
-    World(){}
+    World() {}
     World(const World &){}
     World& operator=(const World &);
     ~World();
@@ -43,10 +43,12 @@ public:
     Grid        *grid;
     Actor       *player;
     GameObject  *clickedTile;
+    //would need a vector of guards like
+    //std::vector<Actor *> guards;
 
     std::vector<GameObject *> surroundingTiles;
     std::vector<GameObject *> tabooTiles;
-    
+        
 public:
     void   setScene(Scene *scene);
     Scene* getScene();

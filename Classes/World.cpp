@@ -20,9 +20,7 @@
 
 World* World::m_instance = NULL;
 
-
 using namespace rapidjson;
-
 
 void World::loadLevel(std::string filename)
 {
@@ -67,6 +65,25 @@ void World::loadLevel(std::string filename)
         Vector2 pt = grid->getTileCoordCenterIso(coord);
         obj->setPosition(pt);
         this->addObject(obj);
+    }
+    
+    len = document["Guards"].Size();
+    
+    for(int i = 0; i < len; ++i)
+    {
+        std::string image = document["Guards"][i]["image"].GetString();
+        float opacity = document["Guards"][i]["opacity"].GetFloat();
+        float scaleX = document["Guards"][i]["scaleX"].GetFloat();
+        float scaleY = document["Guards"][i]["scaleY"].GetFloat();
+        int coord = document["Guards"][i]["coord"].GetInt();
+        
+        Actor *guard = new Actor();
+        guard->setAvatar(image, opacity);
+        Vector2 pt = grid->getTileCoordCenterIso(coord);
+        guard->setPosition(pt);
+        guard->getAvatar()->setScale(scaleX, scaleY);
+        guard->getAvatar()->setAnchorPoint(Vector2(0.5f, 0.1f));
+        this->addObject(guard);
     }
     
     int playerCoord = document["Player"]["coord"].GetInt();

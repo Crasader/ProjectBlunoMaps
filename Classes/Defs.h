@@ -23,5 +23,4 @@ typedef cocos2d::Vec2 Vector2;
 
 //std defs
 
-
 #endif

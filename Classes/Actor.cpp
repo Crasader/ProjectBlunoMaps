@@ -22,6 +22,11 @@ void Actor::update(Vector2 location)
     m_controller->update(*this, location);
 }
 
+void Actor::setController(ActorController *actorController)
+{
+    m_controller = actorController;
+}
+
 Actor::~Actor()
 {
     

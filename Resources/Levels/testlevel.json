@@ -18,7 +18,7 @@
     "Player":
     {
         "image": "stickman.png",
-        "opacity":0.2,
+        "opacity":1.0,
         "scaleX":1.0,
         "scaleY":1.0,
         "anchorPtX":0.5,
@@ -27,17 +27,25 @@
     },
     
     "Guards":
-    {
-        
-    },
+     [
+          {
+            "image": "Guard.png",
+            "opacity":1.0,
+            "scaleX":0.15,
+            "scaleY":0.15,
+            "anchorPtX":0.5,
+            "anchorPtY":1.0,
+            "coord":7
+          }
+     ],
     
     "Obstacles":
     [
               {
               "image": "couch.png",
               "opacity": 0.2,
-              "scaleX":0.3,
-              "scaleY":0.3,
+              "scaleX":0.5,
+              "scaleY":0.5,
               "coord":53
               },
                {

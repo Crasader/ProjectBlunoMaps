@@ -62,8 +62,11 @@
 		BF1712471292920000B8313A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB412928DE900B8313A /* libz.dylib */; };
 		BF1C47F01293687400B63C5D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF1C47EA1293683800B63C5D /* QuartzCore.framework */; };
 		CE1DE1C21D0E3C8A0084FB7D /* yellowRadiusTile.png in Resources */ = {isa = PBXBuildFile; fileRef = CE1DE1C11D0E3C890084FB7D /* yellowRadiusTile.png */; };
+		CE22EBBA1D7D252300BB3AF2 /* PlayerController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CE22EBB81D7D252300BB3AF2 /* PlayerController.cpp */; };
 		CE60D0371B76A1F500B0E9E2 /* Grid.png in Resources */ = {isa = PBXBuildFile; fileRef = CE60D0361B76A1F500B0E9E2 /* Grid.png */; };
 		CE94C20C1D20935B009359D8 /* rapidjson in Resources */ = {isa = PBXBuildFile; fileRef = CE94C20B1D20935B009359D8 /* rapidjson */; };
+		CEA4DFE51D68006B00E56C93 /* GuardController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEA4DFE31D68006B00E56C93 /* GuardController.cpp */; };
+		CEA6A9851D67FCCB00B16F49 /* Guard.png in Resources */ = {isa = PBXBuildFile; fileRef = CEA6A9841D67FCCB00B16F49 /* Guard.png */; };
 		CEA8758B1B671A0400A217A7 /* GameObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEA875891B671A0400A217A7 /* GameObject.cpp */; };
 		CEA875911B6D88DF00A217A7 /* stickman.png in Resources */ = {isa = PBXBuildFile; fileRef = CEA875901B6D88DF00A217A7 /* stickman.png */; };
 		CEA875941B6D8E0D00A217A7 /* Grid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEA875921B6D8E0D00A217A7 /* Grid.cpp */; };
@@ -166,8 +169,13 @@
 		BF170DB412928DE900B8313A /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		BF1C47EA1293683800B63C5D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		CE1DE1C11D0E3C890084FB7D /* yellowRadiusTile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = yellowRadiusTile.png; sourceTree = "<group>"; };
+		CE22EBB81D7D252300BB3AF2 /* PlayerController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PlayerController.cpp; sourceTree = "<group>"; };
+		CE22EBB91D7D252300BB3AF2 /* PlayerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerController.h; sourceTree = "<group>"; };
 		CE60D0361B76A1F500B0E9E2 /* Grid.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Grid.png; sourceTree = "<group>"; };
 		CE94C20B1D20935B009359D8 /* rapidjson */ = {isa = PBXFileReference; lastKnownFileType = folder; path = rapidjson; sourceTree = "<group>"; };
+		CEA4DFE31D68006B00E56C93 /* GuardController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GuardController.cpp; sourceTree = "<group>"; };
+		CEA4DFE41D68006B00E56C93 /* GuardController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GuardController.h; sourceTree = "<group>"; };
+		CEA6A9841D67FCCB00B16F49 /* Guard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Guard.png; sourceTree = "<group>"; };
 		CEA875891B671A0400A217A7 /* GameObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameObject.cpp; sourceTree = "<group>"; };
 		CEA8758A1B671A0400A217A7 /* GameObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameObject.h; sourceTree = "<group>"; };
 		CEA875901B6D88DF00A217A7 /* stickman.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stickman.png; sourceTree = "<group>"; };
@@ -311,6 +319,7 @@
 				CE1DE1C11D0E3C890084FB7D /* yellowRadiusTile.png */,
 				CEC43FD01BD321580082DD3C /* radiusTile.png */,
 				CE60D0361B76A1F500B0E9E2 /* Grid.png */,
+				CEA6A9841D67FCCB00B16F49 /* Guard.png */,
 				CEA875901B6D88DF00A217A7 /* stickman.png */,
 				521A8EA819F11F5000D177D7 /* fonts */,
 				3EACC98E19EE6D4300EB3C5E /* res */,
@@ -338,6 +347,10 @@
 				CEA875971B6D949F00A217A7 /* Actor.h */,
 				CEA875991B6D94B200A217A7 /* ActorController.cpp */,
 				CEA8759A1B6D94B200A217A7 /* ActorController.h */,
+				CEA4DFE31D68006B00E56C93 /* GuardController.cpp */,
+				CEA4DFE41D68006B00E56C93 /* GuardController.h */,
+				CE22EBB81D7D252300BB3AF2 /* PlayerController.cpp */,
+				CE22EBB91D7D252300BB3AF2 /* PlayerController.h */,
 				CEAAA9671B6E9D700070ED4E /* World.cpp */,
 				CEAAA9681B6E9D700070ED4E /* World.h */,
 				CEC43FCC1BD2CC800082DD3C /* GameStateManager.cpp */,
@@ -513,6 +526,7 @@
 				5087E78017EB970100C73F5D /* Icon-114.png in Resources */,
 				50EF62A217ECD613001EB2F8 /* Icon-29.png in Resources */,
 				50EF629617ECD46A001EB2F8 /* Icon-40.png in Resources */,
+				CEA6A9851D67FCCB00B16F49 /* Guard.png in Resources */,
 				5087E78217EB970100C73F5D /* Icon-144.png in Resources */,
 				3EACC98F19EE6D4300EB3C5E /* res in Resources */,
 				50EF629817ECD46A001EB2F8 /* Icon-80.png in Resources */,
@@ -555,7 +569,9 @@
 				CEAAA9691B6E9D700070ED4E /* World.cpp in Sources */,
 				503AE10217EB989F00D1A890 /* RootViewController.mm in Sources */,
 				CEA875941B6D8E0D00A217A7 /* Grid.cpp in Sources */,
+				CE22EBBA1D7D252300BB3AF2 /* PlayerController.cpp in Sources */,
 				503AE10117EB989F00D1A890 /* main.m in Sources */,
+				CEA4DFE51D68006B00E56C93 /* GuardController.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
