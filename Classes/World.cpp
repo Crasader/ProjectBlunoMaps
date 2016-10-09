@@ -9,14 +9,16 @@
 #include <iostream>
 #include <string>
 
-#include "World.h"
-#include "GameObject.h"
-#include "Grid.h"
-#include "Actor.h"
-
 #include "rapidjson/document.h"
 #include "rapidjson/filereadstream.h"
 
+#include "World.h"
+#include "GameObject.h"
+#include "GameStateManager.h"
+#include "Grid.h"
+#include "Actor.h"
+#include "GuardController.h"
+#include "PlayerController.h"
 
 World* World::m_instance = NULL;
 
@@ -68,6 +70,8 @@ void World::loadLevel(std::string filename)
     }
     
     len = document["Guards"].Size();
+    GuardController *guardControl = new GuardController();
+    PlayerController *playerControl = new PlayerController();
     
     for(int i = 0; i < len; ++i)
     {
@@ -76,8 +80,9 @@ void World::loadLevel(std::string filename)
         float scaleX = document["Guards"][i]["scaleX"].GetFloat();
         float scaleY = document["Guards"][i]["scaleY"].GetFloat();
         int coord = document["Guards"][i]["coord"].GetInt();
+        int type = document["Guards"][i]["type"].GetInt();
         
-        Actor *guard = new Actor();
+        Actor *guard = new Actor(guardControl, type, coord);
         guard->setAvatar(image, opacity);
         Vector2 pt = grid->getTileCoordCenterIso(coord);
         guard->setPosition(pt);
@@ -116,7 +121,7 @@ void World::loadLevel(std::string filename)
         //float anchorPtY = document["Player"]["anchorPtY"].GetFloat();
         int coord = document["Player"]["coord"].GetInt();
         
-        player = new Actor();
+        player = new Actor(playerControl, PLAYER, coord);
         player->setAvatar(image, opacity);
         pt = grid->getTileCoordCenterIso(coord);
         player->setPosition(pt);
@@ -128,78 +133,33 @@ void World::loadLevel(std::string filename)
     fclose(pFile);
 }
 
-void World::addObject(GameObject* object)
-{
-    m_gameObjectList.push_back(*object);
-    m_scene->addChild(object->getAvatar(), 1);
-}
-
-void World::removeObject(GameObject* object)
-{
-    m_scene->removeChild(object->getAvatar());
-}
-
-void World::setScene(Scene *scene)
-{
-    m_scene = scene;
-}
-
-Scene* World::getScene()
-{
-    return m_scene;
-}
-
 void World::update(Vector2 location)
 {
-     int clicked = grid->GetTileNumber(location);
-     if(clicked >=0 && clicked <= 63)
-     {
-         Vector2 pt = grid->getTileCoordCenterIso(clicked);
-         clickedTile->setPosition(pt);
-     }
-     
-     Vector2 pos = player->getPosition();
-     int playerOnTile = grid->GetTileNumber(pos);
-     std::set<int> tiles = grid->getSurrondingTiles(playerOnTile, 3);
-     std::set<int>::iterator it = tiles.find(clicked);
-     if(it != tiles.end())
-     {
-         Vector2 pt = grid->getTileCoordCenterIso(clicked);
-         
-         player->move(2.0f, pt);
-         
-         for( std::vector<GameObject *>::iterator itr = surroundingTiles.begin(); itr != surroundingTiles.end(); ++itr)
-         {
-             this->removeObject(*itr);
-         }
-         
-         surroundingTiles.clear();
-         
-         std::set<int> tiles = grid->getSurrondingTiles(clicked, 2);
-         
-         for ( std::set<int>::iterator itr = tiles.begin(); itr != tiles.end(); ++itr)
-         {
-             Grid *tile = new Grid(Vector2(193.525162,383.001984), 60, 60);
-             tile->setAvatar("radiusTile.png", 1, 125);
-             Vector2 pt = grid->getTileCoordCenterIso(*itr);
-             tile->setPosition(pt);
-             this->addObject(tile);
-             surroundingTiles.push_back(tile);
-         }
-         // win tile
-     }
+    GameStateManager::getInstance()->update();
     
-    for(std::vector<GameObject>::iterator i = m_gameObjectList.begin(); i != m_gameObjectList.end(); ++i)
+    for(std::vector<GameObject *>::iterator itr = m_gameObjectList.begin(); itr != m_gameObjectList.end(); ++itr)
     {
-        i->update(location);
+        (*itr)->update(location);
     }
+    
+    for(std::vector<GameObject *>::iterator itr = m_tempRemoveObjects.begin(); itr != m_tempRemoveObjects.end(); ++itr)
+    {
+        removeObject(*itr);
+    }
+    
+    for(std::vector<GameObject *>::iterator itr = m_tempAddObjects.begin(); itr != m_tempAddObjects.end(); ++itr)
+    {
+       addObject(*itr);
+    }
+    
+    m_tempAddObjects.clear();
+    m_tempRemoveObjects.clear();
 }
 
 void World::destroyWorld()
 {
     delete m_instance;
 }
-
 
 World::~World()
 {

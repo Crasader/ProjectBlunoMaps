@@ -31,21 +31,29 @@ public:
     
     Grid(Vector2 startingPoint, float xLength, float yLength);
     
-    int     GetTileNumber(Vector2 position);
+    virtual void update(Vector2);
+    virtual ~Grid();
     
-    /*
-    Vector2 AxisAlignedToIso(Vector2 position);
-    Vector2 GetTileCoordCenterP(int tileNumber);
-    Vector2 GetTileCoordStartP(int tileNumber);
-    */
+public:
+    
+    //helpers
+    
+    int     GetTileNumber(Vector2 position);
     
     Vector2 getTileCoordCenterIso(int tileNumber);
     
-    
     std::set<int> getSurrondingTiles(int tileNumber, int radius);
     
-    virtual void update(Vector2);
-    virtual ~Grid();
+    int moveToUpTile(int currentTile, int byNumber);
+    int moveToDownTile(int currentTile, int byNumber);
+    int moveToLeftTile(int currentTile, int byNumber);
+    int moveToRightTile(int currentTile, int byNumber);
+    
+    /*
+     Vector2 AxisAlignedToIso(Vector2 position);
+     Vector2 GetTileCoordCenterP(int tileNumber);
+     Vector2 GetTileCoordStartP(int tileNumber);
+     */
 };
 
 #endif /* defined(__ProjectBlunoMaps__Grid__) */

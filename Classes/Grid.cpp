@@ -23,33 +23,6 @@ Grid::Grid(Vector2 startingPoint, float xLength, float yLength)
     }
 }
 
-/*
-Vector2 Grid::getTileCoordCenterP(int tileNumber)
-{
-    int y = tileNumber / 8;
-    int x = tileNumber % 8;
-
-    return Vector2( m_startingPoint.x + (x * m_XLength) + (m_XLength/2) , m_startingPoint.y - (y * m_YLength) - (m_YLength/2) );
-    
-}
- 
- Vector2 Grid::getTileCoordStartP(int tileNumber)
- {
- int y = tileNumber / 8;
- int x = tileNumber % 8;
- 
- return Vector2(x * m_XLength , y * m_YLength);
- }
- 
- Vector2 Grid::axisAlignedToIso(Vector2 position)
- {
-    Vector2 isoPosition(0, 0);
-    isoPosition.x = m_startingPoint.x + (2 * (m_startingPoint.y - position.y ) + (position.x - m_startingPoint.x ) ) / 2;
-    isoPosition.y = m_startingPoint.y - (2 * (m_startingPoint.y - position.y) - (position.x - m_startingPoint.x) )/ 2;
-    return isoPosition;
- }
- */
-
  Vector2 Grid::getTileCoordCenterIso(int tileNumber)
  {
      int y = tileNumber / 8;
@@ -124,10 +97,61 @@ int Grid::GetTileNumber(Vector2 tileCoord)
     return ((y * 8) + x);
 }
 
+int Grid::moveToLeftTile(int currentTile, int byNumber)
+{
+    int newTile = currentTile - byNumber;
+    return (0 <= newTile && newTile <= 63) ? newTile : -1;
+}
+
+int Grid::moveToDownTile(int currentTile, int byNumber)
+{
+    int newTile = currentTile + (8*byNumber);
+    return (0 <= newTile && newTile <= 63) ? newTile : -1;
+}
+
+int Grid::moveToUpTile(int currentTile, int byNumber)
+{
+    int newTile = currentTile - (8*byNumber);
+    return (0 <= newTile && newTile <= 63) ? newTile : -1;
+}
+
+int Grid::moveToRightTile(int currentTile, int byNumber)
+{
+    int newTile = currentTile + byNumber;
+    return (0 <= newTile && newTile <= 63) ? newTile : -1;
+}
+
 void Grid::update(Vector2 location)
 {
-    int t =0;
+  
 }
+
+/*
+ Vector2 Grid::getTileCoordCenterP(int tileNumber)
+ {
+ int y = tileNumber / 8;
+ int x = tileNumber % 8;
+ 
+ return Vector2( m_startingPoint.x + (x * m_XLength) + (m_XLength/2) , m_startingPoint.y - (y * m_YLength) - (m_YLength/2) );
+ 
+ }
+ 
+ Vector2 Grid::getTileCoordStartP(int tileNumber)
+ {
+ int y = tileNumber / 8;
+ int x = tileNumber % 8;
+ 
+ return Vector2(x * m_XLength , y * m_YLength);
+ }
+ 
+ Vector2 Grid::axisAlignedToIso(Vector2 position)
+ {
+ Vector2 isoPosition(0, 0);
+ isoPosition.x = m_startingPoint.x + (2 * (m_startingPoint.y - position.y ) + (position.x - m_startingPoint.x ) ) / 2;
+ isoPosition.y = m_startingPoint.y - (2 * (m_startingPoint.y - position.y) - (position.x - m_startingPoint.x) )/ 2;
+ return isoPosition;
+ }
+ */
 
 Grid::~Grid()
 {

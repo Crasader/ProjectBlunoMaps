@@ -10,5 +10,15 @@
 #define ____GuardController__
 
 #include <stdio.h>
+#include "Defs.h"
+#include "ActorController.h"
 
+class Actor;
+
+class GuardController : public ActorController
+{
+public:
+    virtual void update(Actor &actor, Vector2 location);
+    
+};
 #endif /* defined(____GuardController__) */

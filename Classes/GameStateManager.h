@@ -16,7 +16,7 @@ enum GameState
     GAME_BEGIN = 0,
     PLAYER_TURN,
     GUARD_TURN,
-    GAME_END
+    GAME_END =999
 };
 
 
@@ -27,7 +27,7 @@ private:
 
     static GameStateManager *m_instance;
     
-    GameStateManager();
+    GameStateManager() :m_gameState(GAME_BEGIN) {};
     GameStateManager(const GameStateManager &){}
     GameStateManager& operator=(const GameStateManager &);
     ~GameStateManager();
@@ -47,6 +47,8 @@ private:
 public:
     
     int getState();
+    void update();
+    void endGame();
     
 };
 

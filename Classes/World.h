@@ -38,6 +38,9 @@ public:
 private:
    
     Scene    *m_scene;
+    
+    std::vector<GameObject *> m_tempAddObjects;
+    std::vector<GameObject *> m_tempRemoveObjects;
 
 public:
     Grid        *grid;
@@ -46,22 +49,54 @@ public:
     //would need a vector of guards like
     //std::vector<Actor *> guards;
 
+    std::vector<GameObject *> m_gameObjectList;
     std::vector<GameObject *> surroundingTiles;
-    std::vector<GameObject *> tabooTiles;
-        
-public:
-    void   setScene(Scene *scene);
-    Scene* getScene();
+   
+    //would need a list of taboo tiles
+    //or just a list and not a list of gameobject like below
+    //std::vector<GameObject *> tabooTiles;
     
-    void   addObject(GameObject* object);
-    void   removeObject(GameObject* object);
+public:
     
     void   loadLevel(std::string);
     void   update(Vector2 location);
     void   destroyWorld();
     
+//put in .inl file
+private:
+    
+    inline void addObject(GameObject* object)
+    {
+        m_gameObjectList.push_back(object);
+        m_scene->addChild(object->getAvatar(), 1);
+    }
+    
+    inline void removeObject(GameObject* object)
+    {
+        m_scene->removeChild(object->getAvatar());
+    }
+    
 public:
-    std::vector<GameObject> m_gameObjectList;
+    
+    inline void addGameObject(GameObject* object)
+    {
+        m_tempAddObjects.push_back(object);
+    }
+    
+    inline void removeGameObject(GameObject* object)
+    {
+        m_tempRemoveObjects.push_back(object);
+    }
+    
+    inline void setScene(Scene *scene)
+    {
+        m_scene = scene;
+    }
+    
+    inline Scene* getScene()
+    {
+        return m_scene;
+    }
 };
 
 

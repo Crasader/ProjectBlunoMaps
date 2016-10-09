@@ -11,10 +11,11 @@
 
 #include <stdio.h>
 #include "Defs.h"
+#include "ActorController.h"
 
 class Actor;
 
-class PlayerController
+class PlayerController : public ActorController
 {
 public:
     virtual void update(Actor &actor, Vector2 location);

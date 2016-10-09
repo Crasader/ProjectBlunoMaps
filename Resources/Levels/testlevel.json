@@ -1,6 +1,5 @@
 {
     "Project": "BlunoMaps",
-    
     "Level": "Test Level",
     
     
@@ -28,15 +27,27 @@
     
     "Guards":
      [
-          {
+        {
             "image": "Guard.png",
             "opacity":1.0,
             "scaleX":0.15,
             "scaleY":0.15,
             "anchorPtX":0.5,
             "anchorPtY":1.0,
+            "type":3,
             "coord":7
-          }
+        },
+      
+        {
+            "image": "Guard.png",
+            "opacity":1.0,
+            "scaleX":0.15,
+            "scaleY":0.15,
+            "anchorPtX":0.5,
+            "anchorPtY":1.0,
+            "type":4,
+            "coord":59
+        }
      ],
     
     "Obstacles":
