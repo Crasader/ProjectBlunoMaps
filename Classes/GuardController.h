@@ -18,7 +18,7 @@ class Actor;
 class GuardController : public ActorController
 {
 public:
-    virtual void update(Actor &actor, Vector2 location);
+    virtual void update(Actor &actor, float dt);
     
 };
 #endif /* defined(____GuardController__) */

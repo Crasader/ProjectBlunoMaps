@@ -12,9 +12,18 @@
 #include "Grid.h"
 #include "Actor.h"
 
-void GuardController::update(Actor &actor, Vector2 location)
+void GuardController::update(Actor &actor, float dt)
 {
-    if(GameStateManager::getInstance()->getState() == GameState::GUARD_TURN)
+    if(GameStateManager::getInstance()->getState() == GameState::GUARD_MOVING)
+    {
+       actor.move(dt);
+    }
+    
+    //implement cone and calling lock down
+    
+    //
+    
+    if(GameStateManager::getInstance()->getState() == GameState::GUARD_TURN_BEGIN)
     {
         World *world = World::getInstance();
         Grid * grid = world->grid;
@@ -39,7 +48,7 @@ void GuardController::update(Actor &actor, Vector2 location)
                 }
                 
                 Vector2 pt = grid->getTileCoordCenterIso(tileNumber);
-                actor.move(2.0f, pt);
+                actor.setMoveTo(pt);
                 break;
             }
             case MOVE_LEFT_THREE_BLOCKS_GUARD:
@@ -60,11 +69,13 @@ void GuardController::update(Actor &actor, Vector2 location)
                 }
                 
                 Vector2 pt = grid->getTileCoordCenterIso(tileNumber);
-                actor.move(2.0f, pt);
+                actor.setMoveTo(pt);
                 break;
             }
             default:
                 break;
         }
+        
+        GameStateManager::getInstance()->updateToNextState();
     }
 }

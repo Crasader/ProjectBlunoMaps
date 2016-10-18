@@ -12,50 +12,44 @@
 #include "World.h"
 #include "Grid.h"
 
-void PlayerController::update(Actor &actor, Vector2 location)
+void PlayerController::update(Actor &actor, float dt)
 {
-    if(GameStateManager::getInstance()->getState() == GameState::PLAYER_TURN)
+    if(GameStateManager::getInstance()->getState() == GameState::MARK_SURROUNDING_TILES)
+    {
+        World *world = World::getInstance();
+        Grid * grid = world->grid;
+
+        Vector2 pos = actor.getPosition();
+        int playerOnTile = grid->GetTileNumber(pos);
+       
+        //world->m_surroundingTiles.clear();
+        
+        grid->markSurrondingTiles(playerOnTile, 2);
+        
+        GameStateManager::getInstance()->updateToNextState();
+    }
+    
+    if(GameStateManager::getInstance()->getState() == GameState::PLAYER_MOVING)
+    {
+        actor.move(dt);
+    }
+    
+    
+    if(GameStateManager::getInstance()->getState() == GameState::PLAYER_TURN_BEGIN)
     {
         World *world = World::getInstance();
         Grid * grid = world->grid;
         GameObject * clickedTile = world->clickedTile;
 
-        int clicked = grid->GetTileNumber(location);
+        //check if 0 then return
+        
+       /* int clicked = grid->GetTileNumber(world->getLastTouchLocation());
         if(clicked >=0 && clicked <= 63)
         {
             Vector2 pt = grid->getTileCoordCenterIso(clicked);
             clickedTile->setPosition(pt);
-        }
+        }*/
 
-        Vector2 pos = actor.getPosition();
-        int playerOnTile = grid->GetTileNumber(pos);
-        std::set<int> tiles = grid->getSurrondingTiles(playerOnTile, 3);
-        std::set<int>::iterator it = tiles.find(clicked);
-        if(it != tiles.end())
-        {
-            Vector2 pt = grid->getTileCoordCenterIso(clicked);
-            
-            actor.move(2.0f, pt);
-            
-            for( std::vector<GameObject *>::iterator itr = world->surroundingTiles.begin(); itr != world->surroundingTiles.end(); ++itr)
-            {
-                world->removeGameObject(*itr);
-            }
-            
-            world->surroundingTiles.clear();
-            
-            std::set<int> tiles = grid->getSurrondingTiles(clicked, 2);
-            
-            for ( std::set<int>::iterator itr = tiles.begin(); itr != tiles.end(); ++itr)
-            {
-                Grid *tile = new Grid(Vector2(193.525162,383.001984), 60, 60);
-                tile->setAvatar("radiusTile.png", 1, 125);
-                Vector2 pt = grid->getTileCoordCenterIso(*itr);
-                tile->setPosition(pt);
-                world->surroundingTiles.push_back(tile);
-                world->addGameObject(tile);
-            }
-            // win tile
-        }
+       // GameStateManager::getInstance()->updateToNextState();
     }
 }

@@ -12,7 +12,7 @@
 #include <stdio.h>
 #include "Defs.h"
 
-class GameObject 
+class GameObject : public Layer
 {
 protected:
     
@@ -24,12 +24,16 @@ public:
     
     void    setPosition(float x, float y);
     void    setPosition(Vector2 position);
+    void    setOpacity(float opacity);
     Vector2 getPosition();
     void    setAvatar(const std::string& avatarFileName, float depth);
     void    setAvatar(const std::string &avatarFileName, float depth, float opacity);
     Sprite* getAvatar();
+    void    setColor(float x, float y, float z);
     
     virtual void update(Vector2 ) {}
+    
+    void update(float) override;
     
     virtual ~GameObject();
 };

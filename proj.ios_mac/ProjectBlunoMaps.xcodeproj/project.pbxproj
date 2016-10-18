@@ -338,11 +338,15 @@
 				46880B8519C43A87006E1F66 /* AppDelegate.h */,
 				46880B8619C43A87006E1F66 /* MainScene.cpp */,
 				46880B8719C43A87006E1F66 /* MainScene.h */,
+				CEA875951B6D8EF100A217A7 /* Defs.h */,
+				CEAAA9671B6E9D700070ED4E /* World.cpp */,
+				CEAAA9681B6E9D700070ED4E /* World.h */,
+				CEC43FCC1BD2CC800082DD3C /* GameStateManager.cpp */,
+				CEC43FCD1BD2CC800082DD3C /* GameStateManager.h */,
 				CEA875891B671A0400A217A7 /* GameObject.cpp */,
 				CEA8758A1B671A0400A217A7 /* GameObject.h */,
 				CEA875921B6D8E0D00A217A7 /* Grid.cpp */,
 				CEA875931B6D8E0D00A217A7 /* Grid.h */,
-				CEA875951B6D8EF100A217A7 /* Defs.h */,
 				CEA875961B6D949F00A217A7 /* Actor.cpp */,
 				CEA875971B6D949F00A217A7 /* Actor.h */,
 				CEA875991B6D94B200A217A7 /* ActorController.cpp */,
@@ -351,10 +355,6 @@
 				CEA4DFE41D68006B00E56C93 /* GuardController.h */,
 				CE22EBB81D7D252300BB3AF2 /* PlayerController.cpp */,
 				CE22EBB91D7D252300BB3AF2 /* PlayerController.h */,
-				CEAAA9671B6E9D700070ED4E /* World.cpp */,
-				CEAAA9681B6E9D700070ED4E /* World.h */,
-				CEC43FCC1BD2CC800082DD3C /* GameStateManager.cpp */,
-				CEC43FCD1BD2CC800082DD3C /* GameStateManager.h */,
 			);
 			name = Classes;
 			path = ../Classes;
@@ -631,6 +631,7 @@
 					"$(_COCOS_LIB_IOS_END)",
 				);
 				SDKROOT = iphoneos;
+				STRIP_PNG_TEXT = NO;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(_COCOS_HEADER_IOS_BEGIN) $(_COCOS_HEADER_IOS_END)";
 				VALID_ARCHS = "arm64 armv7";
@@ -665,6 +666,7 @@
 					"$(_COCOS_LIB_IOS_END)",
 				);
 				SDKROOT = iphoneos;
+				STRIP_PNG_TEXT = NO;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(_COCOS_HEADER_IOS_BEGIN) $(_COCOS_HEADER_IOS_END)";
 				VALID_ARCHS = "arm64 armv7";

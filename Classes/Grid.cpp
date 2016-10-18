@@ -7,42 +7,77 @@
 //
 
 #include "Grid.h"
-
+#include "World.h"
 
 Grid::Grid(Vector2 startingPoint, float xLength, float yLength)
-:m_startingPoint(startingPoint), m_XLength(xLength), m_YLength(yLength)
+:m_startingPoint(startingPoint), m_XLength(xLength), m_YLength(yLength), m_tileOpacity(125.0f)
 {
     m_totalTiles = 0;
-    
+    World *world = World::getInstance();
+   
     for(int i=0; i < 8; ++i)
     {
         for(int j=0; j < 8; ++j)
         {
+            GameObject *tile = new GameObject();
+            tile->setAvatar("radiusTile.png", 1, 0.0f);
+            tile->setColor(0, 0, 0);
+            Vector2 pt = getTileCoordCenterIso(m_totalTiles);
+            tile->setPosition(pt);
+            m_allTiles.insert( std::pair<int, GameObject *>(m_totalTiles,tile) );
+            world->addGameObject(tile);
             m_grid[i][j] = m_totalTiles++;
         }
     }
 }
 
- Vector2 Grid::getTileCoordCenterIso(int tileNumber)
- {
-     int y = tileNumber / 8;
-     int x = tileNumber % 8;
-     
-     return Vector2( m_startingPoint.x + (x * m_XLength) +(y * m_XLength) + m_XLength, m_startingPoint.y +(x * m_YLength) - (y * m_YLength));
- }
-
-
-
-std::set<int> Grid::getSurrondingTiles(int tileNumber, int radius)
+Vector2 Grid::getTileCoordCenterIso(int tileNumber)
 {
+    int y = tileNumber / 8;
+    int x = tileNumber % 8;
+
+    return Vector2( m_startingPoint.x + (x * m_XLength) +(y * m_XLength) + m_XLength, m_startingPoint.y +(x * m_YLength) - (y * m_YLength));
+}
+
+int Grid::GetTileNumber(Vector2 tileCoord)
+{
+    float xCoord = (tileCoord.x - m_startingPoint.x)/m_XLength;
+    float yCoord = (tileCoord.y - m_startingPoint.y)/m_YLength;
+    
+    int y = (xCoord - yCoord)/2;
+    int x = yCoord + y;
+    
+    return ((y * 8) + x);
+}
+
+std::set<int> Grid::getSurrondingTiles()
+{
+    return m_surroundingTiles;
+}
+
+void Grid::markSurrondingTiles(int tileNumber, int radius)
+{
+    m_surroundingTiles.clear();
+    
     //use grid matrix to find out surronds
-    std::set<int> surroundingTiles;
-    surroundingTiles = getSurrondingTilesHelper(surroundingTiles, tileNumber, radius, false);
+    m_surroundingTiles = getSurrondingTilesHelper(m_surroundingTiles, tileNumber, radius, false);
     
     //remove the tile
-    surroundingTiles.erase(tileNumber);
+    m_surroundingTiles.erase(tileNumber);
     
-    return surroundingTiles;
+    //clear grid and mark surrounding tiles
+    for (std::map<int,GameObject *>::iterator it = m_allTiles.begin(); it != m_allTiles.end(); ++it)
+    {
+        auto search = m_surroundingTiles.find(it->first);
+        if(search != m_surroundingTiles.end())
+        {
+            (it->second)->setOpacity(m_tileOpacity);
+        }
+        else
+        {
+            (it->second)->setOpacity(0.0f);
+        }
+    }
 }
 
 std::set<int> Grid::getSurrondingTilesHelper(std::set<int> &surroundingTiles, int tileNumber, int radius, bool updown)
@@ -83,18 +118,6 @@ std::set<int> Grid::getSurrondingTilesHelper(std::set<int> &surroundingTiles, in
     }
     
     return surroundingTiles;
-    
-}
-
-int Grid::GetTileNumber(Vector2 tileCoord)
-{
-    float xCoord = (tileCoord.x - m_startingPoint.x)/m_XLength;
-    float yCoord = (tileCoord.y - m_startingPoint.y)/m_YLength;
-    
-    int y = (xCoord - yCoord)/2;
-    int x = yCoord + y;
-    
-    return ((y * 8) + x);
 }
 
 int Grid::moveToLeftTile(int currentTile, int byNumber)

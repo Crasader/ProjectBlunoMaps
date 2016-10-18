@@ -7,6 +7,7 @@
 //
 
 #include "GameStateManager.h"
+#include "World.h"
 
 GameStateManager* GameStateManager::m_instance = NULL;
 
@@ -20,23 +21,48 @@ void GameStateManager::endGame()
     
 }
 
-void GameStateManager::update()
+void GameStateManager::updateToNextState()
 {
     switch (m_gameState)
     {
         case GAME_BEGIN:
         {
-            m_gameState = PLAYER_TURN;
+            m_gameState = MARK_SURROUNDING_TILES;
             break;
         }
-        case PLAYER_TURN:
+        case MARK_SURROUNDING_TILES:
         {
-            m_gameState = GUARD_TURN;
+            m_gameState = GET_PLAYER_INPUT;
             break;
         }
-        case GUARD_TURN:
+        case GET_PLAYER_INPUT:
         {
-            m_gameState = PLAYER_TURN;
+            m_gameState = PLAYER_TURN_BEGIN;
+            break;
+        }
+        case PLAYER_TURN_BEGIN:
+        {
+            m_gameState = PLAYER_MOVING;
+            break;
+        }
+        case PLAYER_MOVING:
+        {
+            m_gameState = GUARD_TURN_BEGIN;
+            break;
+        }
+        case GUARD_TURN_BEGIN:
+        {
+            m_gameState = GUARD_MOVING;
+            break;
+        }
+        case GUARD_MOVING:
+        {
+            --m_guardsCount;
+            if(m_guardsCount <= 0)
+            {
+                m_guardsCount = World::getInstance()->getGuardsCount();
+                m_gameState = PLAYER_TURN_BEGIN;
+            }
             break;
         }
         default:

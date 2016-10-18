@@ -10,9 +10,16 @@
 #define __ProjectBlunoMaps__Grid__
 
 #include <stdio.h>
+#include <set>
 #include "Defs.h"
 #include "GameObject.h"
-#include <set>
+
+/*struct Route
+{
+    std::vector<GameObject *> m_routeTiles;
+    float m_timer = 10;
+    bool m_routeSelected = false;
+};*/
 
 class Grid : public GameObject
 {
@@ -20,9 +27,14 @@ private:
     Vector2 m_startingPoint;
     int m_totalTiles;
     int m_grid[8][8];
-    
+    float m_tileOpacity;
     float m_XLength;
     float m_YLength;
+    
+private:
+    std::set<int> m_surroundingTiles;
+    std::map<int, GameObject *> m_allTiles;
+    //std::vector<Route *> m_routes;
     
 private:
      std::set<int> getSurrondingTilesHelper( std::set<int>  &, int tileNumber, int radius, bool updown);
@@ -42,7 +54,9 @@ public:
     
     Vector2 getTileCoordCenterIso(int tileNumber);
     
-    std::set<int> getSurrondingTiles(int tileNumber, int radius);
+    void markSurrondingTiles(int tileNumber, int radius);
+    
+    std::set<int> getSurrondingTiles();
     
     int moveToUpTile(int currentTile, int byNumber);
     int moveToDownTile(int currentTile, int byNumber);

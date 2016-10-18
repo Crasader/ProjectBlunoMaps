@@ -14,8 +14,14 @@
 enum GameState
 {
     GAME_BEGIN = 0,
-    PLAYER_TURN,
-    GUARD_TURN,
+    MARK_SURROUNDING_TILES,
+    GET_PLAYER_INPUT,
+    PLAYER_TURN_BEGIN,
+    PLAYER_MOVING,
+    PLAYER_TURN_END,
+    GUARD_TURN_BEGIN,
+    GUARD_MOVING,
+    GUARD_TURN_END,
     GAME_END =999
 };
 
@@ -27,7 +33,7 @@ private:
 
     static GameStateManager *m_instance;
     
-    GameStateManager() :m_gameState(GAME_BEGIN) {};
+    GameStateManager() :m_gameState(MARK_SURROUNDING_TILES) {};
     GameStateManager(const GameStateManager &){}
     GameStateManager& operator=(const GameStateManager &);
     ~GameStateManager();
@@ -42,12 +48,13 @@ public:
     
 private:
     
+    int m_guardsCount;
     GameState m_gameState;
 
 public:
     
     int getState();
-    void update();
+    void updateToNextState();
     void endGame();
     
 };

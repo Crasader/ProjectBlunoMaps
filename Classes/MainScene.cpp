@@ -40,34 +40,50 @@ bool MainScene::init()
     auto fileUtils = FileUtils::getInstance();
 
     world->loadLevel(fileUtils->fullPathForFilename("Levels/testlevel.json"));
+    
+    this->scheduleUpdate();
 
     return true;
+}
+
+//update loop
+void MainScene::update(float dt)
+{
+    static World *world = World::getInstance();
+    world->update(dt);
 }
 
 bool MainScene::onTouchBegan(Touch* touch, Event* event)
 {
+    Vector2 touchLocation = touch->getLocation();
+    //printf("x: %f, Y: %f", touchLocation.x, touchLocation.y);
     static World *world = World::getInstance();
-    
-    //update loop updating game logic and all things that need update
-    world->update(touch->getLocation());
-    
-    //printf("x: %f, Y: %f", touch->getLocation().x, touch->getLocation().y);
+    world->touchDownBegan(touchLocation);
     
     return true;
 }
 
-void MainScene::onTouchEnded(Touch* touch, Event* event)
+void MainScene::onTouchMoved(Touch *touch, Event *event)
 {
-    cocos2d::log("touch ended");
-}
-
-void MainScene::onTouchMoved(Touch* touch, Event* event)
-{
+    Vector2 touchLocation = touch->getLocation();
+    static World *world = World::getInstance();
+    world->touchDownMoved(touchLocation);
     cocos2d::log("touch moved");
 }
 
-void MainScene::onTouchCancelled(Touch* touch, Event* event)
+void MainScene::onTouchEnded(Touch *touch, Event *event)
+{
+    static World *world = World::getInstance();
+    
+    //printf("x: %f, Y: %f", touch->getLocation().x, touch->getLocation().y);
+    world->touchDownEnded();
+    
+    cocos2d::log("touch ended");
+}
+
+void MainScene::onTouchCancelled(Touch *touch, Event *event)
 {
     cocos2d::log("touch cancelled");
+    onTouchEnded(touch, event);
 }
 

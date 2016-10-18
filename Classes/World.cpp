@@ -14,7 +14,6 @@
 
 #include "World.h"
 #include "GameObject.h"
-#include "GameStateManager.h"
 #include "Grid.h"
 #include "Actor.h"
 #include "GuardController.h"
@@ -32,7 +31,6 @@ void World::loadLevel(std::string filename)
     
     Document document;
     document.ParseStream<kParseStopWhenDoneFlag>(is);
-    
     
     cocos2d::Size visibleSize = Director::getInstance()->getVisibleSize();
     Vector2 origin = Director::getInstance()->getVisibleOrigin();
@@ -70,6 +68,7 @@ void World::loadLevel(std::string filename)
     }
     
     len = document["Guards"].Size();
+    m_numberOfGuards = 0;
     GuardController *guardControl = new GuardController();
     PlayerController *playerControl = new PlayerController();
     
@@ -89,11 +88,12 @@ void World::loadLevel(std::string filename)
         guard->getAvatar()->setScale(scaleX, scaleY);
         guard->getAvatar()->setAnchorPoint(Vector2(0.5f, 0.1f));
         this->addObject(guard);
+        ++m_numberOfGuards;
     }
     
     int playerCoord = document["Player"]["coord"].GetInt();
     int movableRadius = document["Grid"]["moveRadius"].GetInt();
-    std::set<int> tiles = grid->getSurrondingTiles(playerCoord, movableRadius);
+   /* std::set<int> tiles = grid->getSurrondingTiles(playerCoord, movableRadius);
     std::set<int>::iterator it;
     
     for (it = tiles.begin(); it != tiles.end(); ++it)
@@ -103,8 +103,8 @@ void World::loadLevel(std::string filename)
         Vector2 pt = grid->getTileCoordCenterIso(*it);
         tile->setPosition(pt);
         this->addObject(tile);
-        surroundingTiles.push_back(tile);
-    }
+        m_surroundingTiles.push_back(tile);
+    }*/
     
     clickedTile = new GameObject();
     clickedTile->setAvatar("yellowRadiusTile.png", 1, 125);
@@ -133,13 +133,11 @@ void World::loadLevel(std::string filename)
     fclose(pFile);
 }
 
-void World::update(Vector2 location)
+void World::update(float dt)
 {
-    GameStateManager::getInstance()->update();
-    
     for(std::vector<GameObject *>::iterator itr = m_gameObjectList.begin(); itr != m_gameObjectList.end(); ++itr)
     {
-        (*itr)->update(location);
+        (*itr)->update(dt);
     }
     
     for(std::vector<GameObject *>::iterator itr = m_tempRemoveObjects.begin(); itr != m_tempRemoveObjects.end(); ++itr)
@@ -154,6 +152,36 @@ void World::update(Vector2 location)
     
     m_tempAddObjects.clear();
     m_tempRemoveObjects.clear();
+}
+
+void World::touchDownBegan(Vector2 touchLocation)
+{
+    //Route * newRoute = new Route;
+    //m_routes.push_back(newRoute);
+    //newRoute->
+}
+
+void World::touchDownMoved(Vector2 touchLocation)
+{
+    //int lastRoute = m_routes.size() - 1;
+    //Route * route = m_routes.at(lastRoute);
+   // int clickedOnTile = grid->GetTileNumber(touchLocation);
+    
+   // std::vector<GameObject *> tiles = m_surroundingTiles;
+  //  for ( std::vector<GameObject *>::iterator itr = tiles.begin(); itr != tiles.end(); ++itr)
+    {
+        //if(.  clickedOnTile)
+        {
+            
+            //break;
+        }
+    }
+    //route->m_routeTiles;
+}
+
+void World::touchDownEnded()
+{
+    
 }
 
 void World::destroyWorld()

@@ -38,9 +38,10 @@ public:
 private:
    
     Scene    *m_scene;
-    
     std::vector<GameObject *> m_tempAddObjects;
     std::vector<GameObject *> m_tempRemoveObjects;
+    
+    int m_numberOfGuards;
 
 public:
     Grid        *grid;
@@ -50,17 +51,24 @@ public:
     //std::vector<Actor *> guards;
 
     std::vector<GameObject *> m_gameObjectList;
-    std::vector<GameObject *> surroundingTiles;
-   
+    
     //would need a list of taboo tiles
     //or just a list and not a list of gameobject like below
     //std::vector<GameObject *> tabooTiles;
     
 public:
     
-    void   loadLevel(std::string);
-    void   update(Vector2 location);
-    void   destroyWorld();
+    void    loadLevel(std::string);
+    void    update(float);
+    //void    updateLastTouchLocation(Vector2);
+    Vector2 getLastTouchLocation();
+    void    destroyWorld();
+    
+public:
+    
+    void    touchDownBegan(Vector2);
+    void    touchDownMoved(Vector2);
+    void    touchDownEnded();
     
 //put in .inl file
 private:
@@ -86,6 +94,11 @@ public:
     inline void removeGameObject(GameObject* object)
     {
         m_tempRemoveObjects.push_back(object);
+    }
+    
+    inline int getGuardsCount()
+    {
+        return m_numberOfGuards;
     }
     
     inline void setScene(Scene *scene)
