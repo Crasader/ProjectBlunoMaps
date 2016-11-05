@@ -38,7 +38,8 @@ bool MainScene::init()
     World *world = World::getInstance();
     
     auto fileUtils = FileUtils::getInstance();
-
+    
+    world->loadConfig(fileUtils->fullPathForFilename("Config/GameSettings.json"));
     world->loadLevel(fileUtils->fullPathForFilename("Levels/testlevel.json"));
     
     this->scheduleUpdate();
@@ -56,7 +57,7 @@ void MainScene::update(float dt)
 bool MainScene::onTouchBegan(Touch* touch, Event* event)
 {
     Vector2 touchLocation = touch->getLocation();
-    //printf("x: %f, Y: %f", touchLocation.x, touchLocation.y);
+    printf("x: %f, y: %f", touchLocation.x, touchLocation.y);
     static World *world = World::getInstance();
     world->touchDownBegan(touchLocation);
     
@@ -73,10 +74,9 @@ void MainScene::onTouchMoved(Touch *touch, Event *event)
 
 void MainScene::onTouchEnded(Touch *touch, Event *event)
 {
+    Vector2 touchLocation = touch->getLocation();
     static World *world = World::getInstance();
-    
-    //printf("x: %f, Y: %f", touch->getLocation().x, touch->getLocation().y);
-    world->touchDownEnded();
+    world->touchDownEnded(touchLocation);
     
     cocos2d::log("touch ended");
 }

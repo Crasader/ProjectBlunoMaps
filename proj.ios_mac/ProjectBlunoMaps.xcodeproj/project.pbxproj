@@ -63,6 +63,7 @@
 		BF1C47F01293687400B63C5D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF1C47EA1293683800B63C5D /* QuartzCore.framework */; };
 		CE1DE1C21D0E3C8A0084FB7D /* yellowRadiusTile.png in Resources */ = {isa = PBXBuildFile; fileRef = CE1DE1C11D0E3C890084FB7D /* yellowRadiusTile.png */; };
 		CE22EBBA1D7D252300BB3AF2 /* PlayerController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CE22EBB81D7D252300BB3AF2 /* PlayerController.cpp */; };
+		CE52B4681DCA65BE008E6DBE /* Config in Resources */ = {isa = PBXBuildFile; fileRef = CE52B4671DCA65BE008E6DBE /* Config */; };
 		CE60D0371B76A1F500B0E9E2 /* Grid.png in Resources */ = {isa = PBXBuildFile; fileRef = CE60D0361B76A1F500B0E9E2 /* Grid.png */; };
 		CE94C20C1D20935B009359D8 /* rapidjson in Resources */ = {isa = PBXBuildFile; fileRef = CE94C20B1D20935B009359D8 /* rapidjson */; };
 		CEA4DFE51D68006B00E56C93 /* GuardController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEA4DFE31D68006B00E56C93 /* GuardController.cpp */; };
@@ -171,6 +172,7 @@
 		CE1DE1C11D0E3C890084FB7D /* yellowRadiusTile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = yellowRadiusTile.png; sourceTree = "<group>"; };
 		CE22EBB81D7D252300BB3AF2 /* PlayerController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PlayerController.cpp; sourceTree = "<group>"; };
 		CE22EBB91D7D252300BB3AF2 /* PlayerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerController.h; sourceTree = "<group>"; };
+		CE52B4671DCA65BE008E6DBE /* Config */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Config; sourceTree = "<group>"; };
 		CE60D0361B76A1F500B0E9E2 /* Grid.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Grid.png; sourceTree = "<group>"; };
 		CE94C20B1D20935B009359D8 /* rapidjson */ = {isa = PBXFileReference; lastKnownFileType = folder; path = rapidjson; sourceTree = "<group>"; };
 		CEA4DFE31D68006B00E56C93 /* GuardController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GuardController.cpp; sourceTree = "<group>"; };
@@ -314,6 +316,7 @@
 		46880B7519C43A67006E1F66 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				CE52B4671DCA65BE008E6DBE /* Config */,
 				CEED639D1D207E830014BE97 /* Levels */,
 				CEED63971D20530A0014BE97 /* couch.png */,
 				CE1DE1C11D0E3C890084FB7D /* yellowRadiusTile.png */,
@@ -530,6 +533,7 @@
 				5087E78217EB970100C73F5D /* Icon-144.png in Resources */,
 				3EACC98F19EE6D4300EB3C5E /* res in Resources */,
 				50EF629817ECD46A001EB2F8 /* Icon-80.png in Resources */,
+				CE52B4681DCA65BE008E6DBE /* Config in Resources */,
 				5087E78417EB970100C73F5D /* Icon-57.png in Resources */,
 				5087E77E17EB970100C73F5D /* Default.png in Resources */,
 				521A8E6419F0C34300D177D7 /* Default-667h@2x.png in Resources */,

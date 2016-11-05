@@ -14,9 +14,15 @@
 
 void GuardController::update(Actor &actor, float dt)
 {
-    if(GameStateManager::getInstance()->getState() == GameState::GUARD_MOVING)
+    bool actorReachedToDestination = actor.reachedToDestination();
+    
+    if(GameStateManager::getInstance()->getState() == GameState::GUARD_MOVING && !actorReachedToDestination)
     {
-       actor.move(dt);
+        actor.move(dt);
+        actorReachedToDestination = actor.reachedToDestination();
+        
+        if(actorReachedToDestination)
+            GameStateManager::getInstance()->updateToNextState();
     }
     
     //implement cone and calling lock down
@@ -27,17 +33,15 @@ void GuardController::update(Actor &actor, float dt)
     {
         World *world = World::getInstance();
         Grid * grid = world->grid;
+        int guardsStartingTile = actor.getStartingTile();
+        Vector2 position = actor.getPosition();
+        int guardOnTile = grid->getTileNumber(position);
+        int tileNumber;
         
         switch (actor.getActorType())
         {
             case MOVE_DOWN_THREE_BLOCKS_GUARD:
             {
-                int guardsStartingTile = actor.getStartingTile();
-                Vector2 pos = actor.getPosition();
-                int guardOnTile = grid->GetTileNumber(pos);
-                
-                int tileNumber;
-                
                 if(guardOnTile == guardsStartingTile)
                 {
                     tileNumber = grid->moveToDownTile(guardOnTile, 3);
@@ -53,12 +57,6 @@ void GuardController::update(Actor &actor, float dt)
             }
             case MOVE_LEFT_THREE_BLOCKS_GUARD:
             {
-                int guardsStartingTile = actor.getStartingTile();
-                Vector2 pos = actor.getPosition();
-                int guardOnTile = grid->GetTileNumber(pos);
-                
-                int tileNumber;
-                
                 if(guardOnTile == guardsStartingTile)
                 {
                     tileNumber = grid->moveToLeftTile(guardOnTile, 3);

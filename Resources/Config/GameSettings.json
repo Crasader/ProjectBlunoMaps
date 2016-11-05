@@ -1,0 +1,11 @@
+{
+    "Project": "BlunoMaps",
+    
+    "Settings":
+      {
+          "SurroundingTileOpacity":125.0,
+          "TileOpacityOnClick": 255.0,
+          "RouteTimer":5.0
+      }
+}
+

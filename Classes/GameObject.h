@@ -30,6 +30,7 @@ public:
     void    setAvatar(const std::string &avatarFileName, float depth, float opacity);
     Sprite* getAvatar();
     void    setColor(float x, float y, float z);
+    void    setColor(float x, float y, float z , float opacity);
     
     virtual void update(Vector2 ) {}
     

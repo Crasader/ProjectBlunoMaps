@@ -10,7 +10,7 @@
 #include "World.h"
 
 Grid::Grid(Vector2 startingPoint, float xLength, float yLength)
-:m_startingPoint(startingPoint), m_XLength(xLength), m_YLength(yLength), m_tileOpacity(125.0f)
+:m_startingPoint(startingPoint), m_XLength(xLength), m_YLength(yLength)
 {
     m_totalTiles = 0;
     World *world = World::getInstance();
@@ -39,15 +39,16 @@ Vector2 Grid::getTileCoordCenterIso(int tileNumber)
     return Vector2( m_startingPoint.x + (x * m_XLength) +(y * m_XLength) + m_XLength, m_startingPoint.y +(x * m_YLength) - (y * m_YLength));
 }
 
-int Grid::GetTileNumber(Vector2 tileCoord)
+int Grid::getTileNumber(Vector2 tileCoord)
 {
     float xCoord = (tileCoord.x - m_startingPoint.x)/m_XLength;
     float yCoord = (tileCoord.y - m_startingPoint.y)/m_YLength;
     
-    int y = (xCoord - yCoord)/2;
-    int x = yCoord + y;
+    int y = ((xCoord - yCoord)/2.0f);
+    int x = ((xCoord + yCoord)/2.0f);
     
     return ((y * 8) + x);
+    
 }
 
 std::set<int> Grid::getSurrondingTiles()
@@ -71,13 +72,28 @@ void Grid::markSurrondingTiles(int tileNumber, int radius)
         auto search = m_surroundingTiles.find(it->first);
         if(search != m_surroundingTiles.end())
         {
-            (it->second)->setOpacity(m_tileOpacity);
+            (it->second)->setOpacity(World::SurroundingTileOpacity);
         }
         else
         {
             (it->second)->setOpacity(0.0f);
         }
     }
+}
+
+void Grid::clearSurrondingTiles()
+{
+    //clear grid and mark surrounding tiles
+    for (std::map<int,GameObject *>::iterator it = m_allTiles.begin(); it != m_allTiles.end(); ++it)
+    {
+        auto search = m_surroundingTiles.find(it->first);
+        if(search != m_surroundingTiles.end())
+        {
+            (it->second)->setOpacity(0.0f);
+        }
+    }
+    
+    m_surroundingTiles.clear();
 }
 
 std::set<int> Grid::getSurrondingTilesHelper(std::set<int> &surroundingTiles, int tileNumber, int radius, bool updown)
@@ -120,6 +136,79 @@ std::set<int> Grid::getSurrondingTilesHelper(std::set<int> &surroundingTiles, in
     return surroundingTiles;
 }
 
+
+bool Grid::confirmRoute(Vector2 touchLocation)
+{
+    int clickedTile = getTileNumber(touchLocation);
+    auto search = m_surroundingTiles.find(clickedTile);
+    
+    if(search != m_surroundingTiles.end())
+    {
+        unsigned long numRoutes = m_routes.size();
+        bool createNewRoute = false;
+        Route * route;
+        
+        if(numRoutes > 0)
+        {
+            //last route
+            route = m_routes.back();
+            
+            if(route->m_carved == true && clickedTile == route->m_routeTiles.back())
+            {
+                routingTiles = route->m_routeTiles;
+                return true;
+            }
+            else if(route->m_carved)
+            {
+                createNewRoute = true;
+            }
+            else
+            {
+                auto searchTile = find(route->m_routeTiles.begin(), route->m_routeTiles.end(), clickedTile);
+                
+                if(searchTile != route->m_routeTiles.end())
+                {
+                    return false;
+                }
+            }
+        }
+        
+        if( numRoutes == 0 || createNewRoute)
+        {
+            unsigned long routeGradient = m_surroundingTiles.size();
+            
+            //new route
+            route = new Route(routeGradient, World::RouteTimer);
+            m_routes.push_back(route);
+        }
+        
+        route->m_routeTiles.push_back(clickedTile);
+        
+        std::map<int,GameObject *>::iterator it = m_allTiles.find(clickedTile);
+        if (it != m_allTiles.end())
+        {
+            float gradient = route->getGradient();
+            (it->second)->setColor(gradient, 0, 0, World::TileOpacityOnClick);
+        }
+    }
+    return false;
+}
+
+void Grid::stopRoute(Vector2 touchLocation)
+{
+    unsigned long numRoutes = m_routes.size();
+    
+    if(numRoutes > 0)
+    {
+        Route * lastRoute = m_routes.back();
+       
+        if(lastRoute->m_timer == World::RouteTimer)
+        {
+            lastRoute->m_carved = true;
+        }
+    }
+}
+
 int Grid::moveToLeftTile(int currentTile, int byNumber)
 {
     int newTile = currentTile - byNumber;
@@ -144,9 +233,37 @@ int Grid::moveToRightTile(int currentTile, int byNumber)
     return (0 <= newTile && newTile <= 63) ? newTile : -1;
 }
 
-void Grid::update(Vector2 location)
+void Grid::update(float dt)
 {
-  
+    for (std::vector<Route *>::iterator it = m_routes.begin(); it != m_routes.end();)
+    {
+        if((*it)->m_carved == true)
+        {
+            (*it)->m_timer -= dt;
+            if((*it)->m_timer < 0.0f)
+            {
+                for( std::vector<int>::iterator itr = (*it)->m_routeTiles.begin(); itr != (*it)->m_routeTiles.end(); ++itr)
+                {
+                    auto search = m_allTiles.find(*itr);
+                    if (search != m_allTiles.end())
+                    {
+                        (search->second)->setColor(0, 0, 0, World::SurroundingTileOpacity);
+                    }
+                }
+                Route *route = *it;
+                it = m_routes.erase(it);
+                delete route;
+            }
+            else
+            {
+                ++it;
+            }
+        }
+        else
+        {
+            ++it;
+        }
+    }
 }
 
 /*

@@ -11,18 +11,19 @@
 #include "ActorController.h"
 #include "GameStateManager.h"
 
-Actor::Actor(ActorController *controller, int actorType, int startingTile) :  m_controller (controller), m_actorType (actorType), m_startingTile(startingTile), m_speed(2.0f) {}
+Actor::Actor(ActorController *controller, int actorType, int startingTile, float speed) :  m_controller (controller), m_actorType (actorType), m_startingTile(startingTile), m_reachedFlg(true), m_speed(speed) {}
 
 void Actor::move(float dt)
 {
+    m_reachedFlg = false;
+    
     // Move a sprite to a specific location over duration.
     m_position.x += (m_moveToPt.x - m_position.x) * (m_speed *dt);
     m_position.y += (m_moveToPt.y - m_position.y) * (m_speed *dt);
     m_avatar->setPosition(m_position);
     
-    if( (fabsf(m_moveToPt.x - m_position.x) <= 1 && fabsf(m_moveToPt.y - m_position.y) <= 1) && m_reachedFlg == false )
+    if( (fabsf(m_moveToPt.x - m_position.x) <= 2 && fabsf(m_moveToPt.y - m_position.y) <= 2) )
     {
-        GameStateManager::getInstance()->updateToNextState();
         m_reachedFlg = true;
     }
 }
@@ -50,7 +51,14 @@ int Actor::getStartingTile()
 void Actor::setMoveTo(Vector2 position)
 {
     m_moveToPt = position;
+    m_distance.x = (m_moveToPt.x - m_position.x);
+    m_distance.y = (m_moveToPt.y - m_position.y);
     m_reachedFlg = false;
+}
+
+bool Actor::reachedToDestination()
+{
+    return m_reachedFlg;
 }
 
 Actor::~Actor()

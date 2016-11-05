@@ -54,6 +54,12 @@ void GameObject::setColor(float x, float y, float z)
     m_avatar->setColor(Color(x, y, z));
 }
 
+void GameObject::setColor(float x, float y, float z , float opacity)
+{
+    m_avatar->setColor(Color(x, y, z));
+    m_avatar->setOpacity(opacity);
+}
+
 void GameObject::setOpacity(float opacity)
 {
     m_avatar->setOpacity(opacity);

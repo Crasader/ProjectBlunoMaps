@@ -40,35 +40,39 @@ private:
     Scene    *m_scene;
     std::vector<GameObject *> m_tempAddObjects;
     std::vector<GameObject *> m_tempRemoveObjects;
+    std::vector<GameObject *> m_gameObjectList;
     
     int m_numberOfGuards;
 
 public:
     Grid        *grid;
     Actor       *player;
-    GameObject  *clickedTile;
+    
     //would need a vector of guards like
     //std::vector<Actor *> guards;
-
-    std::vector<GameObject *> m_gameObjectList;
-    
     //would need a list of taboo tiles
     //or just a list and not a list of gameobject like below
     //std::vector<GameObject *> tabooTiles;
     
 public:
+    //config game settings
+    static float TileOpacityOnClick;
+    static float SurroundingTileOpacity;
+    static float RouteTimer;
+    
+public:
     
     void    loadLevel(std::string);
+    void    loadConfig(std::string);
     void    update(float);
-    //void    updateLastTouchLocation(Vector2);
-    Vector2 getLastTouchLocation();
+   
     void    destroyWorld();
     
 public:
     
     void    touchDownBegan(Vector2);
     void    touchDownMoved(Vector2);
-    void    touchDownEnded();
+    void    touchDownEnded(Vector2);
     
 //put in .inl file
 private:

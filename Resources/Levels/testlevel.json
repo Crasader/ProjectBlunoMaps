@@ -22,6 +22,7 @@
         "scaleY":1.0,
         "anchorPtX":0.5,
         "anchorPtY":1.0,
+        "speed":1.0,
         "coord":0
     },
     
@@ -34,6 +35,7 @@
             "scaleY":0.15,
             "anchorPtX":0.5,
             "anchorPtY":1.0,
+            "speed":0.5,
             "type":3,
             "coord":7
         },
@@ -45,6 +47,7 @@
             "scaleY":0.15,
             "anchorPtX":0.5,
             "anchorPtY":1.0,
+            "speed":0.5,
             "type":4,
             "coord":59
         }

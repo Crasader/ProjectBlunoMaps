@@ -14,12 +14,24 @@
 #include "Defs.h"
 #include "GameObject.h"
 
-/*struct Route
+struct Route
 {
-    std::vector<GameObject *> m_routeTiles;
-    float m_timer = 10;
-    bool m_routeSelected = false;
-};*/
+    std::vector<int> m_routeTiles;
+    float m_gradient;
+    float m_timer;
+    bool m_carved;
+    
+    Route(float gradient, float timer):  m_timer(timer), m_carved(false)
+    {
+        m_gradient = (255/2)/gradient;
+    }
+    
+    float getGradient()
+    {
+        float gradient = ((m_routeTiles.size() -1) * m_gradient) + m_gradient;
+        return (255 - gradient);
+    }
+};
 
 class Grid : public GameObject
 {
@@ -27,36 +39,27 @@ private:
     Vector2 m_startingPoint;
     int m_totalTiles;
     int m_grid[8][8];
-    float m_tileOpacity;
+    
     float m_XLength;
     float m_YLength;
     
-private:
     std::set<int> m_surroundingTiles;
     std::map<int, GameObject *> m_allTiles;
-    //std::vector<Route *> m_routes;
+    std::vector<Route *> m_routes;
     
-private:
-     std::set<int> getSurrondingTilesHelper( std::set<int>  &, int tileNumber, int radius, bool updown);
+public:
+    std::vector<int> routingTiles;
     
 public:
     
     Grid(Vector2 startingPoint, float xLength, float yLength);
     
-    virtual void update(Vector2);
-    virtual ~Grid();
-    
-public:
-    
-    //helpers
-    
-    int     GetTileNumber(Vector2 position);
-    
     Vector2 getTileCoordCenterIso(int tileNumber);
-    
+    int getTileNumber(Vector2 position);
     void markSurrondingTiles(int tileNumber, int radius);
-    
-    std::set<int> getSurrondingTiles();
+    void clearSurrondingTiles();
+    bool confirmRoute(Vector2);
+    void stopRoute(Vector2);
     
     int moveToUpTile(int currentTile, int byNumber);
     int moveToDownTile(int currentTile, int byNumber);
@@ -68,6 +71,13 @@ public:
      Vector2 GetTileCoordCenterP(int tileNumber);
      Vector2 GetTileCoordStartP(int tileNumber);
      */
+
+    virtual void update(float);
+    virtual ~Grid();
+    
+private:
+    std::set<int> getSurrondingTilesHelper( std::set<int>  &, int tileNumber, int radius, bool updown);
+    std::set<int> getSurrondingTiles();
 };
 
 #endif /* defined(__ProjectBlunoMaps__Grid__) */

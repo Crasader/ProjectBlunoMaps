@@ -34,18 +34,20 @@ private:
     ActorController *m_controller;
     
 private:
-    float m_speed;
     Vector2 m_moveToPt;
-    bool m_reachedFlg;
+    Vector2 m_distance;
+    float   m_speed;
+    bool    m_reachedFlg;
     
 public:
-    Actor(ActorController *, int, int);
+    Actor(ActorController *, int, int, float);
     virtual void update(float);
     void changeController(ActorController *);
     void move(float dt);
     int  getActorType();
     int  getStartingTile();
     void setMoveTo(Vector2);
+    bool reachedToDestination();
     virtual ~Actor();
 };
 

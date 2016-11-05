@@ -18,8 +18,12 @@
 #include "Actor.h"
 #include "GuardController.h"
 #include "PlayerController.h"
+#include "GameStateManager.h"
 
 World* World::m_instance = NULL;
+float World::TileOpacityOnClick = 0.0f;
+float World::SurroundingTileOpacity = 0.0f;
+float World::RouteTimer = 0.0f;
 
 using namespace rapidjson;
 
@@ -80,8 +84,9 @@ void World::loadLevel(std::string filename)
         float scaleY = document["Guards"][i]["scaleY"].GetFloat();
         int coord = document["Guards"][i]["coord"].GetInt();
         int type = document["Guards"][i]["type"].GetInt();
+        float speed = document["Guards"][i]["speed"].GetFloat();
         
-        Actor *guard = new Actor(guardControl, type, coord);
+        Actor *guard = new Actor(guardControl, type, coord, speed);
         guard->setAvatar(image, opacity);
         Vector2 pt = grid->getTileCoordCenterIso(coord);
         guard->setPosition(pt);
@@ -91,27 +96,6 @@ void World::loadLevel(std::string filename)
         ++m_numberOfGuards;
     }
     
-    int playerCoord = document["Player"]["coord"].GetInt();
-    int movableRadius = document["Grid"]["moveRadius"].GetInt();
-   /* std::set<int> tiles = grid->getSurrondingTiles(playerCoord, movableRadius);
-    std::set<int>::iterator it;
-    
-    for (it = tiles.begin(); it != tiles.end(); ++it)
-    {
-        GameObject *tile = new GameObject;
-        tile->setAvatar("radiusTile.png", 1, 125);
-        Vector2 pt = grid->getTileCoordCenterIso(*it);
-        tile->setPosition(pt);
-        this->addObject(tile);
-        m_surroundingTiles.push_back(tile);
-    }*/
-    
-    clickedTile = new GameObject();
-    clickedTile->setAvatar("yellowRadiusTile.png", 1, 125);
-    Vector2 pt = grid->getTileCoordCenterIso(playerCoord);
-    clickedTile->setPosition(pt);
-    this->addObject(clickedTile);
-    
     {
         std::string image = document["Player"]["image"].GetString();
         float opacity = document["Player"]["opacity"].GetFloat();
@@ -120,10 +104,11 @@ void World::loadLevel(std::string filename)
         //float anchorPtX = document["Player"]["anchorPtX"].GetFloat();
         //float anchorPtY = document["Player"]["anchorPtY"].GetFloat();
         int coord = document["Player"]["coord"].GetInt();
+        float speed = document["Player"]["speed"].GetFloat();
         
-        player = new Actor(playerControl, PLAYER, coord);
+        player = new Actor(playerControl, PLAYER, coord, speed);
         player->setAvatar(image, opacity);
-        pt = grid->getTileCoordCenterIso(coord);
+        Vector2 pt = grid->getTileCoordCenterIso(coord);
         player->setPosition(pt);
         //player->getAvatar()->setScale(scaleX, scaleY);
         player->getAvatar()->setAnchorPoint(Vector2(0.5f, 0.1f));
@@ -133,8 +118,31 @@ void World::loadLevel(std::string filename)
     fclose(pFile);
 }
 
+void World::loadConfig(std::string filename)
+{
+    FILE *pFile = fopen(filename.c_str(), "r");
+    char buffer[65536];
+    FileReadStream is(pFile, buffer, sizeof(buffer));
+    
+    Document document;
+    document.ParseStream<kParseStopWhenDoneFlag>(is);
+    
+    Vector2 origin = Director::getInstance()->getVisibleOrigin();
+    
+    {
+        TileOpacityOnClick = document["Settings"]["TileOpacityOnClick"].GetFloat();
+        SurroundingTileOpacity = document["Settings"]["SurroundingTileOpacity"].GetFloat();
+        RouteTimer = document["Settings"]["RouteTimer"].GetFloat();
+    }
+    
+    fclose(pFile);
+}
+
+
 void World::update(float dt)
 {
+    grid->update(dt);
+    
     for(std::vector<GameObject *>::iterator itr = m_gameObjectList.begin(); itr != m_gameObjectList.end(); ++itr)
     {
         (*itr)->update(dt);
@@ -156,32 +164,27 @@ void World::update(float dt)
 
 void World::touchDownBegan(Vector2 touchLocation)
 {
-    //Route * newRoute = new Route;
-    //m_routes.push_back(newRoute);
-    //newRoute->
+    if(GameStateManager::getInstance()->getState() == GameState::GET_PLAYER_INPUT)
+    {
+        if(grid->confirmRoute(touchLocation))
+            GameStateManager::getInstance()->updateToNextState();
+    }
 }
 
 void World::touchDownMoved(Vector2 touchLocation)
 {
-    //int lastRoute = m_routes.size() - 1;
-    //Route * route = m_routes.at(lastRoute);
-   // int clickedOnTile = grid->GetTileNumber(touchLocation);
-    
-   // std::vector<GameObject *> tiles = m_surroundingTiles;
-  //  for ( std::vector<GameObject *>::iterator itr = tiles.begin(); itr != tiles.end(); ++itr)
+    if(GameStateManager::getInstance()->getState() == GameState::GET_PLAYER_INPUT)
     {
-        //if(.  clickedOnTile)
-        {
-            
-            //break;
-        }
+        grid->confirmRoute(touchLocation);
     }
-    //route->m_routeTiles;
 }
 
-void World::touchDownEnded()
+void World::touchDownEnded(Vector2 touchLocation)
 {
-    
+    if(GameStateManager::getInstance()->getState() == GameState::GET_PLAYER_INPUT)
+    {
+        grid->stopRoute(touchLocation);
+    }
 }
 
 void World::destroyWorld()

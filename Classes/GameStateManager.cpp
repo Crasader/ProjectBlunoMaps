@@ -47,12 +47,19 @@ void GameStateManager::updateToNextState()
         }
         case PLAYER_MOVING:
         {
+            m_guardsCount = World::getInstance()->getGuardsCount();
             m_gameState = GUARD_TURN_BEGIN;
             break;
         }
         case GUARD_TURN_BEGIN:
         {
-            m_gameState = GUARD_MOVING;
+            --m_guardsCount;
+            if(m_guardsCount <= 0)
+            {
+                 m_guardsCount = World::getInstance()->getGuardsCount();
+                 m_gameState = GUARD_MOVING;
+            }
+
             break;
         }
         case GUARD_MOVING:
@@ -60,8 +67,7 @@ void GameStateManager::updateToNextState()
             --m_guardsCount;
             if(m_guardsCount <= 0)
             {
-                m_guardsCount = World::getInstance()->getGuardsCount();
-                m_gameState = PLAYER_TURN_BEGIN;
+                m_gameState = MARK_SURROUNDING_TILES;
             }
             break;
         }
