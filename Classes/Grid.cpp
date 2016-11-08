@@ -83,17 +83,14 @@ void Grid::markSurrondingTiles(int tileNumber, int radius)
 
 void Grid::clearSurrondingTiles()
 {
-    //clear grid and mark surrounding tiles
+    m_surroundingTiles.clear();
+    m_routes.clear();
+
+    //clear grid
     for (std::map<int,GameObject *>::iterator it = m_allTiles.begin(); it != m_allTiles.end(); ++it)
     {
-        auto search = m_surroundingTiles.find(it->first);
-        if(search != m_surroundingTiles.end())
-        {
-            (it->second)->setOpacity(0.0f);
-        }
+        (it->second)->setColor(0,0,0, 0.0f);
     }
-    
-    m_surroundingTiles.clear();
 }
 
 std::set<int> Grid::getSurrondingTilesHelper(std::set<int> &surroundingTiles, int tileNumber, int radius, bool updown)

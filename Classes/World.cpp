@@ -99,10 +99,10 @@ void World::loadLevel(std::string filename)
     {
         std::string image = document["Player"]["image"].GetString();
         float opacity = document["Player"]["opacity"].GetFloat();
-        //float scaleX = document["Player"]["scaleX"].GetFloat();
-        //float scaleY = document["Player"]["scaleY"].GetFloat();
-        //float anchorPtX = document["Player"]["anchorPtX"].GetFloat();
-        //float anchorPtY = document["Player"]["anchorPtY"].GetFloat();
+        float scaleX = document["Player"]["scaleX"].GetFloat();
+        float scaleY = document["Player"]["scaleY"].GetFloat();
+        float anchorPtX = document["Player"]["anchorPtX"].GetFloat();
+        float anchorPtY = document["Player"]["anchorPtY"].GetFloat();
         int coord = document["Player"]["coord"].GetInt();
         float speed = document["Player"]["speed"].GetFloat();
         
@@ -110,9 +110,12 @@ void World::loadLevel(std::string filename)
         player->setAvatar(image, opacity);
         Vector2 pt = grid->getTileCoordCenterIso(coord);
         player->setPosition(pt);
-        //player->getAvatar()->setScale(scaleX, scaleY);
-        player->getAvatar()->setAnchorPoint(Vector2(0.5f, 0.1f));
+        player->getAvatar()->setScale(scaleX, scaleY);
+        player->getAvatar()->setAnchorPoint(Vector2(anchorPtX, anchorPtY));
         this->addObject(player);
+        //because player needs to the last rendered
+        //please take this hack out and get it flowing from json.
+        player->getAvatar()->setGlobalZOrder(150.0f);
     }
     
     fclose(pFile);

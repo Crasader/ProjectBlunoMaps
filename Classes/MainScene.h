@@ -7,6 +7,9 @@
 class MainScene : public Layer
 {
     
+private:
+    float m_oldDistance, m_newDistance;
+    
 public:
 
     static cocos2d::Scene* createScene();
@@ -14,9 +17,13 @@ public:
     virtual bool init();
       
     bool onTouchBegan(cocos2d::Touch*, cocos2d::Event*);
-    void onTouchEnded(cocos2d::Touch*, cocos2d::Event*);
     void onTouchMoved(cocos2d::Touch*, cocos2d::Event*);
+    void onTouchEnded(cocos2d::Touch*, cocos2d::Event*);
     void onTouchCancelled(cocos2d::Touch*, cocos2d::Event*);
+    
+    void onTouchesBegan(const std::vector<Touch *> &touches, cocos2d::Event*);
+    void onTouchesMoved(const std::vector<Touch *> &touches, cocos2d::Event*);
+    void onTouchesEnded(const std::vector<Touch *> &touches, cocos2d::Event*);
     
     CREATE_FUNC(MainScene);
     

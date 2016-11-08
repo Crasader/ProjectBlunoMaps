@@ -16,12 +16,12 @@
     
     "Player":
     {
-        "image": "stickman.png",
+        "image": "AJ.png",
         "opacity":1.0,
-        "scaleX":1.0,
-        "scaleY":1.0,
+        "scaleX":0.3,
+        "scaleY":0.3,
         "anchorPtX":0.5,
-        "anchorPtY":1.0,
+        "anchorPtY":0.2,
         "speed":1.0,
         "coord":0
     },
