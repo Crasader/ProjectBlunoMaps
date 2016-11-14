@@ -62,6 +62,7 @@ void MainScene::update(float dt)
 
 bool MainScene::onTouchBegan(Touch* touch, Event* event)
 {
+    //m_oldSingleTouch = Vector2(0,0);
     Vector2 touchLocation = touch->getLocation();
     printf("x: %f, y: %f", touchLocation.x, touchLocation.y);
     static World *world = World::getInstance();
@@ -73,6 +74,24 @@ bool MainScene::onTouchBegan(Touch* touch, Event* event)
 
 void MainScene::onTouchMoved(Touch *touch, Event *event)
 {
+    /*
+    m_newSingleTouch = touch->getLocation();
+    
+    if(m_oldSingleTouch == Vector2::ZERO)
+    {
+        m_oldSingleTouch = m_newSingleTouch;
+        return;
+    }
+    
+    Camera *camera = Camera::getDefaultCamera();
+    float cameraZ = camera->getPositionZ();
+    
+    Vector2 dir = m_oldSingleTouch - m_newSingleTouch;
+    
+    camera->setPosition3D(Vec3(camera->getPositionX() + (0.01*dir.x), camera->getPositionY() + (0.01*dir.y), cameraZ ));
+    m_oldDistanceMultiTouch = m_newDistanceMultiTouch;
+*/
+
     Vector2 touchLocation = touch->getLocation();
     static World *world = World::getInstance();
     world->touchDownMoved(touchLocation);
@@ -81,6 +100,7 @@ void MainScene::onTouchMoved(Touch *touch, Event *event)
 
 void MainScene::onTouchEnded(Touch *touch, Event *event)
 {
+   // m_oldSingleTouch = Vector2(0,0);
     Vector2 touchLocation = touch->getLocation();
     static World *world = World::getInstance();
     world->touchDownEnded(touchLocation);
@@ -89,20 +109,13 @@ void MainScene::onTouchEnded(Touch *touch, Event *event)
 
 void MainScene::onTouchCancelled(Touch *touch, Event *event)
 {
-    cocos2d::log("touch cancelled");
     onTouchEnded(touch, event);
+    cocos2d::log("touch cancelled");
 }
 
 void MainScene::onTouchesBegan(const std::vector<Touch *> &touches, cocos2d::Event*)
 {
-    unsigned long tsize = touches.size();
-    if(tsize == 2)
-    {
-        Vector2 touch1 = touches.at(0)->getLocation();
-        Vector2 touch2 = touches.at(1)->getLocation();
-        
-        m_oldDistance = touch1.distance(touch2);
-    }
+    m_oldDistanceMultiTouch = 0;
 }
 
 void MainScene::onTouchesMoved(const std::vector<Touch *> &touches, cocos2d::Event*)
@@ -110,31 +123,40 @@ void MainScene::onTouchesMoved(const std::vector<Touch *> &touches, cocos2d::Eve
     unsigned long tsize = touches.size();
     if(tsize == 2)
     {
+        
         Vector2 touch1 = touches.at(0)->getLocation();
         Vector2 touch2 = touches.at(1)->getLocation();
         
-        m_newDistance = touch1.distance(touch2);
-        Camera *_camera = Camera::getDefaultCamera();
-        //printf("camera x: %f, y: %f, z:%f", _camera->getPositionX(),_camera->getPositionY(), _camera->getPositionZ());
-        float cameraZ = _camera->getPositionZ();
-       
-        if(m_oldDistance < m_newDistance && cameraZ > 200.0f )
+        m_newDistanceMultiTouch = touch1.distance(touch2);
+        
+        if(m_oldDistanceMultiTouch == 0)
         {
-            //Zoom in
-            _camera->setPosition3D(Vec3(_camera->getPositionX(), _camera->getPositionY(), cameraZ - (0.1 * fabsf(m_newDistance - m_oldDistance))));
-        }
-        else if(cameraZ < 800.0f)
-        {
-            //Zoom out
-            _camera->setPosition3D(Vec3(_camera->getPositionX(), _camera->getPositionY(), cameraZ + ( 0.1 * fabsf(m_newDistance - m_oldDistance))));
+            m_oldDistanceMultiTouch = m_newDistanceMultiTouch;
+            return;
         }
         
-        m_oldDistance = m_newDistance;
+        Camera *camera = Camera::getDefaultCamera();
+        float cameraZ = camera->getPositionZ();
+        
+        float zoom = World::ZoomFactor * fabsf(m_newDistanceMultiTouch - m_oldDistanceMultiTouch);
+        
+        if(m_oldDistanceMultiTouch < m_newDistanceMultiTouch && cameraZ > World::MaxZoomIn )
+        {
+            //Zoom in
+            camera->setPosition3D(Vec3(camera->getPositionX(), camera->getPositionY(), cameraZ - zoom ));
+            m_oldDistanceMultiTouch = m_newDistanceMultiTouch;
+        }
+        else if(cameraZ < World::MaxZoomOut)
+        {
+            //Zoom out
+            camera->setPosition3D(Vec3(camera->getPositionX(), camera->getPositionY(), cameraZ + zoom ));
+            m_oldDistanceMultiTouch = m_newDistanceMultiTouch;
+        }
     }
 }
 
 void MainScene::onTouchesEnded(const std::vector<Touch *> &touches, cocos2d::Event*)
 {
-    
+     m_oldDistanceMultiTouch = 0;
 }
 

@@ -58,7 +58,10 @@ public:
     //config game settings
     static float TileOpacityOnClick;
     static float SurroundingTileOpacity;
+    static float ZoomFactor;
     static float RouteTimer;
+    static float MaxZoomIn;
+    static float MaxZoomOut;
     
 public:
     

@@ -29,24 +29,24 @@
     "Guards":
      [
         {
-            "image": "Guard.png",
+            "image": "Guard1.png",
             "opacity":1.0,
-            "scaleX":0.15,
-            "scaleY":0.15,
+            "scaleX":0.3,
+            "scaleY":0.3,
             "anchorPtX":0.5,
-            "anchorPtY":1.0,
+            "anchorPtY":0.2,
             "speed":0.5,
             "type":3,
             "coord":7
         },
       
         {
-            "image": "Guard.png",
+            "image": "Guard1.png",
             "opacity":1.0,
-            "scaleX":0.15,
-            "scaleY":0.15,
+            "scaleX":0.3,
+            "scaleY":0.3,
             "anchorPtX":0.5,
-            "anchorPtY":1.0,
+            "anchorPtY":0.2,
             "speed":0.5,
             "type":4,
             "coord":59

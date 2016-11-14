@@ -8,7 +8,8 @@ class MainScene : public Layer
 {
     
 private:
-    float m_oldDistance, m_newDistance;
+    Vector2 m_oldSingleTouch, m_newSingleTouch;
+    float m_oldDistanceMultiTouch, m_newDistanceMultiTouch;
     
 public:
 

@@ -5,7 +5,10 @@
       {
           "SurroundingTileOpacity":125.0,
           "TileOpacityOnClick": 255.0,
-          "RouteTimer":5.0
+          "RouteTimer":5.0,
+          "ZoomFactor":0.5,
+          "MaxZoomIn":200.0,
+          "MaxZoomOut":800.0
       }
 }
 

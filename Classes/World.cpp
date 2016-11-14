@@ -20,10 +20,17 @@
 #include "PlayerController.h"
 #include "GameStateManager.h"
 
+
+// Temporary until I decide where to put them
 World* World::m_instance = NULL;
 float World::TileOpacityOnClick = 0.0f;
 float World::SurroundingTileOpacity = 0.0f;
 float World::RouteTimer = 0.0f;
+float World::ZoomFactor = 0.0f;
+float World::MaxZoomIn = 0.0f;
+float World::MaxZoomOut = 0.0f;
+//
+
 
 using namespace rapidjson;
 
@@ -49,6 +56,7 @@ void World::loadLevel(std::string filename)
         
         grid = new Grid(Vector2(startingPtX, startingPtY), lenghtX, lenghtY);
         grid->setAvatar(image, opacity);
+        //grid->setColor(155, 0, 0);
         grid->setPosition(Vector2(visibleSize.width/2 + origin.x, visibleSize.height/2 + origin.y));
         this->addObject(grid);
     }
@@ -82,6 +90,8 @@ void World::loadLevel(std::string filename)
         float opacity = document["Guards"][i]["opacity"].GetFloat();
         float scaleX = document["Guards"][i]["scaleX"].GetFloat();
         float scaleY = document["Guards"][i]["scaleY"].GetFloat();
+        float anchorPtX = document["Player"]["anchorPtX"].GetFloat();
+        float anchorPtY = document["Player"]["anchorPtY"].GetFloat();
         int coord = document["Guards"][i]["coord"].GetInt();
         int type = document["Guards"][i]["type"].GetInt();
         float speed = document["Guards"][i]["speed"].GetFloat();
@@ -91,7 +101,7 @@ void World::loadLevel(std::string filename)
         Vector2 pt = grid->getTileCoordCenterIso(coord);
         guard->setPosition(pt);
         guard->getAvatar()->setScale(scaleX, scaleY);
-        guard->getAvatar()->setAnchorPoint(Vector2(0.5f, 0.1f));
+        guard->getAvatar()->setAnchorPoint(Vector2(anchorPtX, anchorPtY));
         this->addObject(guard);
         ++m_numberOfGuards;
     }
@@ -136,6 +146,9 @@ void World::loadConfig(std::string filename)
         TileOpacityOnClick = document["Settings"]["TileOpacityOnClick"].GetFloat();
         SurroundingTileOpacity = document["Settings"]["SurroundingTileOpacity"].GetFloat();
         RouteTimer = document["Settings"]["RouteTimer"].GetFloat();
+        ZoomFactor = document["Settings"]["ZoomFactor"].GetFloat();
+        MaxZoomIn = document["Settings"]["MaxZoomIn"].GetFloat();
+        MaxZoomOut = document["Settings"]["MaxZoomOut"].GetFloat();
     }
     
     fclose(pFile);

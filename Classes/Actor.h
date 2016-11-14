@@ -9,8 +9,7 @@
 #ifndef __ProjectBlunoMaps__Actor__
 #define __ProjectBlunoMaps__Actor__
 
-#include <stdio.h>
-#include "GameObject.h"
+#include "Vision.h"
 
 enum ActorType
 {
@@ -29,14 +28,14 @@ private:
     Actor(){}
     
 private:
-    int m_actorType;
-    int m_startingTile;
-    ActorController *m_controller;
-    
-private:
+   
     Vector2 m_moveToPt;
     Vector2 m_distance;
     float   m_speed;
+    int     m_actorType;
+    int     m_startingTile;
+    ActorController *m_controller;
+    Vision *m_vision;
     bool    m_reachedFlg;
     
 public:

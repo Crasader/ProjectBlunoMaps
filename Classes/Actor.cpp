@@ -6,12 +6,24 @@
 //
 //
 
-#include <math.h>
 #include "Actor.h"
 #include "ActorController.h"
 #include "GameStateManager.h"
+#include "World.h"
+#include "Grid.h"
 
-Actor::Actor(ActorController *controller, int actorType, int startingTile, float speed) :  m_controller (controller), m_actorType (actorType), m_startingTile(startingTile), m_reachedFlg(true), m_speed(speed) {}
+Actor::Actor(ActorController *controller, int actorType, int startingTile, float speed) :
+m_controller (controller), m_actorType (actorType), m_startingTile(startingTile), m_reachedFlg(true), m_speed(speed)
+{
+    World *world = World::getInstance();
+    m_vision = new Vision();
+    m_vision->setAvatar("visionCone.png", 0.2);
+    Vector2 position = world->grid->getTileCoordCenterIso(startingTile);
+    m_vision->setPosition(position);
+    //m_vision->getAvatar()->setScale(scaleX, scaleY);
+    //m_vision->getAvatar()->setAnchorPoint(Vector2(anchorPtX, anchorPtY));
+    world->addGameObject(m_vision);
+}
 
 void Actor::move(float dt)
 {
