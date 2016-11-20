@@ -8,6 +8,7 @@
 
 #include "Grid.h"
 #include "World.h"
+#include "TouchGridWrapper.h"
 
 Grid::Grid(Vector2 startingPoint, float xLength, float yLength)
 :m_startingPoint(startingPoint), m_XLength(xLength), m_YLength(yLength)
@@ -20,7 +21,7 @@ Grid::Grid(Vector2 startingPoint, float xLength, float yLength)
         for(int j=0; j < 8; ++j)
         {
             GameObject *tile = new GameObject();
-            tile->setAvatar("radiusTile.png", 1, 0.0f);
+            tile->setAvatar("radiusTile.png", 0.2f, 0.0f);
             tile->setColor(0, 0, 0);
             Vector2 pt = getTileCoordCenterIso(m_totalTiles);
             tile->setPosition(pt);
@@ -136,7 +137,8 @@ std::set<int> Grid::getSurrondingTilesHelper(std::set<int> &surroundingTiles, in
 
 bool Grid::confirmRoute(Vector2 touchLocation)
 {
-    int clickedTile = getTileNumber(touchLocation);
+    TouchGridWrapper *wrapper = TouchGridWrapper::getInstance();
+    int clickedTile = wrapper->getTileNumber(touchLocation);
     auto search = m_surroundingTiles.find(clickedTile);
     
     if(search != m_surroundingTiles.end())
@@ -204,6 +206,11 @@ void Grid::stopRoute(Vector2 touchLocation)
             lastRoute->m_carved = true;
         }
     }
+}
+
+void Grid::lockDown()
+{
+    setColor(155, 0, 0);
 }
 
 int Grid::moveToLeftTile(int currentTile, int byNumber)

@@ -9,8 +9,6 @@
 #ifndef __ProjectBlunoMaps__GameStateManager__
 #define __ProjectBlunoMaps__GameStateManager__
 
-#include <stdio.h>
-
 enum GameState
 {
     GAME_BEGIN = 0,

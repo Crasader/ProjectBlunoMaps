@@ -9,8 +9,6 @@
 #ifndef ____GuardController__
 #define ____GuardController__
 
-#include <stdio.h>
-#include "Defs.h"
 #include "ActorController.h"
 
 class Actor;

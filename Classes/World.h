@@ -9,7 +9,6 @@
 #ifndef __ProjectBlunoMaps__World__
 #define __ProjectBlunoMaps__World__
 
-#include <stdio.h>
 #include "Defs.h"
 #include "GameObject.h"
 
@@ -68,7 +67,7 @@ public:
     void    loadLevel(std::string);
     void    loadConfig(std::string);
     void    update(float);
-   
+    
     void    destroyWorld();
     
 public:

@@ -6,7 +6,7 @@
     "Grid":
     {
         "image": "Grid.png",
-        "opacity":1.0,
+        "opacity":255,
         "startingPtX":249.523010,
         "startingPtY":321,
         "lenghtX":39.93,
@@ -17,7 +17,7 @@
     "Player":
     {
         "image": "AJ.png",
-        "opacity":1.0,
+        "opacity":255,
         "scaleX":0.3,
         "scaleY":0.3,
         "anchorPtX":0.5,
@@ -30,26 +30,40 @@
      [
         {
             "image": "Guard1.png",
-            "opacity":1.0,
+            "opacity":255,
             "scaleX":0.3,
             "scaleY":0.3,
             "anchorPtX":0.5,
             "anchorPtY":0.2,
             "speed":0.5,
             "type":3,
-            "coord":7
+            "coord":7,
+            "visionImage": "visionCone.png",
+            "visionHeight":153,
+            "visionRadius":65.36,
+            "visionDirection":60.0,
+            "visionOpacity":200.0,
+            "visionScaleX":3,
+            "visionScaleY":3
         },
       
         {
             "image": "Guard1.png",
-            "opacity":1.0,
+            "opacity":255,
             "scaleX":0.3,
             "scaleY":0.3,
             "anchorPtX":0.5,
             "anchorPtY":0.2,
             "speed":0.5,
             "type":4,
-            "coord":59
+            "coord":59,
+            "visionImage": "visionCone.png",
+            "visionHeight":153,
+            "visionRadius":65.36,
+            "visionDirection":150.0,
+            "visionOpacity":200.0,
+            "visionScaleX":3,
+            "visionScaleY":3
         }
      ],
     
@@ -57,14 +71,14 @@
     [
               {
               "image": "couch.png",
-              "opacity": 0.2,
+              "opacity": 255,
               "scaleX":0.5,
               "scaleY":0.5,
               "coord":53
               },
                {
                "image": "couch.png",
-               "opacity": 1.0,
+               "opacity": 255,
                "scaleX":0.5,
                "scaleY":0.5,
                "coord":27

@@ -7,8 +7,6 @@
 //
 
 #include "GameObject.h"
-#include "Defs.h"
-
 
 GameObject::GameObject() {}
 
@@ -35,6 +33,7 @@ void GameObject::setAvatar(const std::string &avatarFileName, float depth)
 {
     m_avatar = Sprite::create(avatarFileName);
     m_avatar->setPosition(m_position);
+    m_avatar->setGlobalZOrder(depth);
 }
 
 void GameObject::setAvatar(const std::string &avatarFileName, float depth, float opacity)
@@ -42,11 +41,17 @@ void GameObject::setAvatar(const std::string &avatarFileName, float depth, float
     m_avatar = Sprite::create(avatarFileName);
     m_avatar->setPosition(m_position);
     m_avatar->setOpacity(opacity);
+    m_avatar->setGlobalZOrder(depth);
 }
 
-Sprite* GameObject::getAvatar()
+void GameObject::setScale(float x, float y)
 {
-    return m_avatar;
+    m_avatar->setScale(x,y);
+}
+
+void GameObject::setAnchorPoint(Vector2 position)
+{
+    m_avatar->setAnchorPoint(position);
 }
 
 void GameObject::setColor(float x, float y, float z)
@@ -65,6 +70,16 @@ void GameObject::setOpacity(float opacity)
     m_avatar->setOpacity(opacity);
 }
 
+void GameObject::setRotation(float rad)
+{
+    m_avatar->setRotation(rad);
+}
+
+Sprite* GameObject::getAvatar()
+{
+    return m_avatar;
+}
+ 
 void GameObject::update(float t)
 {
    

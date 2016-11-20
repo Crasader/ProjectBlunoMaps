@@ -25,14 +25,11 @@ void GuardController::update(Actor &actor, float dt)
             GameStateManager::getInstance()->updateToNextState();
     }
     
-    //implement cone and calling lock down
-    
-    //
-    
     if(GameStateManager::getInstance()->getState() == GameState::GUARD_TURN_BEGIN)
     {
         World *world = World::getInstance();
         Grid * grid = world->grid;
+      
         int guardsStartingTile = actor.getStartingTile();
         Vector2 position = actor.getPosition();
         int guardOnTile = grid->getTileNumber(position);

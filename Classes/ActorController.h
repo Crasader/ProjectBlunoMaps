@@ -9,9 +9,6 @@
 #ifndef __ProjectBlunoMaps__ActorController__
 #define __ProjectBlunoMaps__ActorController__
 
-#include <stdio.h>
-#include "Defs.h"
-
 class Actor;
 
 class ActorController

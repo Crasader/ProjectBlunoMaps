@@ -12,10 +12,12 @@
 #include "rapidjson/document.h"
 #include "rapidjson/filereadstream.h"
 
+#include "TouchGridWrapper.h"
 #include "World.h"
 #include "GameObject.h"
 #include "Grid.h"
 #include "Actor.h"
+#include "Vision.h"
 #include "GuardController.h"
 #include "PlayerController.h"
 #include "GameStateManager.h"
@@ -55,10 +57,13 @@ void World::loadLevel(std::string filename)
         float lenghtY = document["Grid"]["lenghtY"].GetFloat();
         
         grid = new Grid(Vector2(startingPtX, startingPtY), lenghtX, lenghtY);
-        grid->setAvatar(image, opacity);
-        //grid->setColor(155, 0, 0);
+        grid->setAvatar(image, 0.1f ,opacity);
         grid->setPosition(Vector2(visibleSize.width/2 + origin.x, visibleSize.height/2 + origin.y));
         this->addObject(grid);
+        
+        //Set Wrapper
+        TouchGridWrapper * wrapper = TouchGridWrapper::getInstance();
+        wrapper->setFactors(startingPtX, startingPtY, lenghtX, lenghtY );
     }
     
     int len = document["Obstacles"].Size();
@@ -72,14 +77,15 @@ void World::loadLevel(std::string filename)
         int coord = document["Obstacles"][i]["coord"].GetInt();
 
         GameObject *obj = new GameObject();
-        obj->setAvatar(image, opacity);
-        obj->getAvatar()->setScale(scaleX, scaleY);
+        obj->setAvatar(image, 0.5f ,opacity);
+        obj->setScale(scaleX, scaleY);
         Vector2 pt = grid->getTileCoordCenterIso(coord);
         obj->setPosition(pt);
         this->addObject(obj);
     }
     
     len = document["Guards"].Size();
+    
     m_numberOfGuards = 0;
     GuardController *guardControl = new GuardController();
     PlayerController *playerControl = new PlayerController();
@@ -96,13 +102,30 @@ void World::loadLevel(std::string filename)
         int type = document["Guards"][i]["type"].GetInt();
         float speed = document["Guards"][i]["speed"].GetFloat();
         
+        std::string visionImage = document["Guards"][i]["visionImage"].GetString();
+        float visionDirection = document["Guards"][i]["visionDirection"].GetFloat();
+        float visionHeight = document["Guards"][i]["visionHeight"].GetFloat();
+        float visionRadius = document["Guards"][i]["visionRadius"].GetFloat();
+        float visionScaleX = document["Guards"][i]["visionScaleX"].GetFloat();
+        float visionScaleY = document["Guards"][i]["visionScaleY"].GetFloat();
+        float visionOpacity = document["Guards"][i]["visionOpacity"].GetFloat();
+        
         Actor *guard = new Actor(guardControl, type, coord, speed);
-        guard->setAvatar(image, opacity);
+        guard->setAvatar(image, 1 , opacity);
         Vector2 pt = grid->getTileCoordCenterIso(coord);
         guard->setPosition(pt);
-        guard->getAvatar()->setScale(scaleX, scaleY);
-        guard->getAvatar()->setAnchorPoint(Vector2(anchorPtX, anchorPtY));
+        guard->setScale(scaleX, scaleY);
+        guard->setAnchorPoint(Vector2(anchorPtX, anchorPtY));
         this->addObject(guard);
+        
+        Vision *vision = new Vision(visionHeight, visionRadius, visionDirection);
+        vision->setAvatar(visionImage, 0.1f, visionOpacity);
+        vision->setPosition(pt);
+        vision->setScale(visionScaleX, visionScaleY);
+        vision->setRotation(visionDirection);
+
+        guard->setVision(vision);
+        this->addObject(vision);
         ++m_numberOfGuards;
     }
     
@@ -117,15 +140,12 @@ void World::loadLevel(std::string filename)
         float speed = document["Player"]["speed"].GetFloat();
         
         player = new Actor(playerControl, PLAYER, coord, speed);
-        player->setAvatar(image, opacity);
+        player->setAvatar(image, 1, opacity);
         Vector2 pt = grid->getTileCoordCenterIso(coord);
         player->setPosition(pt);
-        player->getAvatar()->setScale(scaleX, scaleY);
-        player->getAvatar()->setAnchorPoint(Vector2(anchorPtX, anchorPtY));
+        player->setScale(scaleX, scaleY);
+        player->setAnchorPoint(Vector2(anchorPtX, anchorPtY));
         this->addObject(player);
-        //because player needs to the last rendered
-        //please take this hack out and get it flowing from json.
-        player->getAvatar()->setGlobalZOrder(150.0f);
     }
     
     fclose(pFile);

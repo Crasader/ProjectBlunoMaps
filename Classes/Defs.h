@@ -20,7 +20,8 @@ typedef cocos2d::Event Event;
 
 //cocos2d math
 typedef cocos2d::Vec2 Vector2;
-
+typedef cocos2d::Vec3 Vector3;
+typedef cocos2d::Mat4 Matrix;
 //cocos2d misc
 typedef cocos2d::Color3B Color;
 

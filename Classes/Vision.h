@@ -9,18 +9,24 @@
 #ifndef Vision_h
 #define Vision_h
 
-#include <stdio.h>
 #include "GameObject.h"
 
 class Vision : public GameObject
 {
 private:
+    Vision() {}
+    
+private:
     float   m_height;
-    bool    m_angle;
+    float   m_radius;
+    float   m_direction;
     
 public:
 
-    //Vision();
+    Vision(float height, float radius, float direction);
+    void setRotation(float rad);
+    virtual void update(float);
+    
     //virtual ~Vision();
 };
 

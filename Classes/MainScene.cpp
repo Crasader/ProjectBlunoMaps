@@ -1,5 +1,6 @@
 #include "MainScene.h"
 #include "World.h"
+#include "TouchGridWrapper.h"
 
 USING_NS_CC;
 
@@ -60,11 +61,54 @@ void MainScene::update(float dt)
     world->update(dt);
 }
 
+Vector3 get3dPoint(Vector2 point2D)
+//, int width,int height)
+{
+    
+    //double x = 2.0 * winX / clientWidth - 1;
+    // double y = - 2.0 * winY / clientHeight + 1;
+    
+    Camera *camera = Camera::getDefaultCamera();
+    Vector3 point3D(point2D.x, point2D.y, 0);
+    Matrix viewProj = camera->getViewProjectionMatrix();
+    Vector3 v;
+    viewProj.transformPoint(point3D, &v);
+    return v;
+}
+
+
+Vector2 get2dPoint(Vector3 point3D)
+{
+    Camera *camera = Camera::getDefaultCamera();
+    Matrix viewProj = camera->getViewProjectionMatrix();
+    Vector3 v;
+    viewProj.transformPoint(point3D, &v);
+    
+   // int winX = (int) Math.round((( point3D.getX() + 1 ) / 2.0) *
+                              //  width );
+    //we calculate -point3D.getY() because the screen Y axis is
+    //oriented top->down
+   // int winY = (int) Math.round((( 1 - point3D.getY() ) / 2.0) *
+                               // height );
+    return Vector2(v.x, v.y);
+}
+
 bool MainScene::onTouchBegan(Touch* touch, Event* event)
 {
     //m_oldSingleTouch = Vector2(0,0);
     Vector2 touchLocation = touch->getLocation();
-    printf("x: %f, y: %f", touchLocation.x, touchLocation.y);
+    Vector3 point = get3dPoint(touchLocation);
+    printf("touchLoc x: %f, y: %f", touchLocation.x, touchLocation.y);
+    
+    //printf("World 3D: x: %f, y: %f, z:%f", point.x, point.y, point.z);
+    
+    Vector2 pt = get2dPoint(point);
+    //printf("2D x: %f, y: %f", pt.x, pt.y);
+   
+    //Camera *camera = Camera:: getDefaultCamera();
+   // camera->setPosition3D(Vec3(camera->getPositionX(), camera->getPositionY(), camera->getPositionZ() - 200 ));
+  
+    
     static World *world = World::getInstance();
     world->touchDownBegan(touchLocation);
     
@@ -100,6 +144,9 @@ void MainScene::onTouchMoved(Touch *touch, Event *event)
 
 void MainScene::onTouchEnded(Touch *touch, Event *event)
 {
+   // Camera *camera = Camera:: getDefaultCamera();
+   // camera->setPosition3D(Vec3(camera->getPositionX(), camera->getPositionY(), camera->getPositionZ() + 200 ));
+  
    // m_oldSingleTouch = Vector2(0,0);
     Vector2 touchLocation = touch->getLocation();
     static World *world = World::getInstance();
@@ -120,6 +167,16 @@ void MainScene::onTouchesBegan(const std::vector<Touch *> &touches, cocos2d::Eve
 
 void MainScene::onTouchesMoved(const std::vector<Touch *> &touches, cocos2d::Event*)
 {
+    //start//178.638107, y: 319         //70.89  //2   0.7
+    //val //278.475342, y: 368.919159   //10 //5
+    //val2 //325.398071, y: 391.881348
+    
+    
+   // 66.823883, y: 319.001404touch ended  //9135
+    //193.615082, y: 381.897827touch ended //11.98 //5.49
+    //257.509918, y: 412.846863touch ended
+    
+   TouchGridWrapper *wrapper = TouchGridWrapper::getInstance();
     unsigned long tsize = touches.size();
     if(tsize == 2)
     {
@@ -135,19 +192,25 @@ void MainScene::onTouchesMoved(const std::vector<Touch *> &touches, cocos2d::Eve
             return;
         }
         
-        Camera *camera = Camera::getDefaultCamera();
+        Camera *camera = Camera:: getDefaultCamera();
         float cameraZ = camera->getPositionZ();
         
         float zoom = World::ZoomFactor * fabsf(m_newDistanceMultiTouch - m_oldDistanceMultiTouch);
         
         if(m_oldDistanceMultiTouch < m_newDistanceMultiTouch && cameraZ > World::MaxZoomIn )
         {
+            //This is a hack //Take it out
+            wrapper->setFactors( -(0.9135* zoom), -(0.02* zoom) , 0.1 * zoom , 0.0549* zoom);
+            
             //Zoom in
             camera->setPosition3D(Vec3(camera->getPositionX(), camera->getPositionY(), cameraZ - zoom ));
             m_oldDistanceMultiTouch = m_newDistanceMultiTouch;
         }
         else if(cameraZ < World::MaxZoomOut)
         {
+            //This is a hack //Take it out
+            wrapper->setFactors( (0.9135* zoom), (0.02* zoom),-(0.1 * zoom) , -( 0.0549* zoom));
+            
             //Zoom out
             camera->setPosition3D(Vec3(camera->getPositionX(), camera->getPositionY(), cameraZ + zoom ));
             m_oldDistanceMultiTouch = m_newDistanceMultiTouch;

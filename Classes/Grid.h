@@ -54,12 +54,15 @@ public:
     
     Grid(Vector2 startingPoint, float xLength, float yLength);
     
-    Vector2 getTileCoordCenterIso(int tileNumber);
-    int getTileNumber(Vector2 position);
-    void markSurrondingTiles(int tileNumber, int radius);
-    void clearSurrondingTiles();
-    bool confirmRoute(Vector2);
-    void stopRoute(Vector2);
+    Vector2     getTileCoordCenterIso(int tileNumber);
+    int         getTileNumber(Vector2 position);
+    void        markSurrondingTiles(int tileNumber, int radius);
+    void        clearSurrondingTiles();
+    bool        confirmRoute(Vector2);
+    void        stopRoute(Vector2);
+
+    void        lockDown();
+    void        cancelLockDown();
     
     int moveToUpTile(int currentTile, int byNumber);
     int moveToDownTile(int currentTile, int byNumber);

@@ -9,7 +9,7 @@
 #ifndef __ProjectBlunoMaps__Actor__
 #define __ProjectBlunoMaps__Actor__
 
-#include "Vision.h"
+#include "GameObject.h"
 
 enum ActorType
 {
@@ -20,6 +20,7 @@ enum ActorType
     MOVE_LEFT_THREE_BLOCKS_GUARD
 };
 
+class Vision;
 class ActorController;
 
 class Actor : public GameObject
@@ -29,24 +30,29 @@ private:
     
 private:
    
-    Vector2 m_moveToPt;
-    Vector2 m_distance;
-    float   m_speed;
-    int     m_actorType;
-    int     m_startingTile;
+    Vector2         m_moveToPt;
+    Vector2         m_distance;
+    float           m_speed;
+    int             m_actorType;
+    int             m_startingTile;
     ActorController *m_controller;
-    Vision *m_vision;
-    bool    m_reachedFlg;
+    Vision          *m_vision;
+    bool            m_reachedFlg;
     
 public:
     Actor(ActorController *, int, int, float);
+    
+    void    changeController(ActorController *);
+    void    move(float dt);
+    void    setMoveTo(Vector2);
+    bool    reachedToDestination();
+    
+    void    setVision(Vision *vision);
+    
+    int     getActorType();
+    int     getStartingTile();
+    
     virtual void update(float);
-    void changeController(ActorController *);
-    void move(float dt);
-    int  getActorType();
-    int  getStartingTile();
-    void setMoveTo(Vector2);
-    bool reachedToDestination();
     virtual ~Actor();
 };
 

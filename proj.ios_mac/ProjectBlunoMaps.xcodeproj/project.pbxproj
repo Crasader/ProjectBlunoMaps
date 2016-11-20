@@ -80,6 +80,7 @@
 		CEC43FD11BD321580082DD3C /* radiusTile.png in Resources */ = {isa = PBXBuildFile; fileRef = CEC43FD01BD321580082DD3C /* radiusTile.png */; };
 		CEED63981D20530A0014BE97 /* couch.png in Resources */ = {isa = PBXBuildFile; fileRef = CEED63971D20530A0014BE97 /* couch.png */; };
 		CEED639E1D207E830014BE97 /* Levels in Resources */ = {isa = PBXBuildFile; fileRef = CEED639D1D207E830014BE97 /* Levels */; };
+		CEF85D331DDEC977003CCBC6 /* TouchGridWrapper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEF85D311DDEC977003CCBC6 /* TouchGridWrapper.cpp */; };
 		D44C620C132DFF330009C878 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620B132DFF330009C878 /* OpenAL.framework */; };
 		D44C620E132DFF430009C878 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620D132DFF430009C878 /* AVFoundation.framework */; };
 		D44C6210132DFF4E0009C878 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620F132DFF4E0009C878 /* AudioToolbox.framework */; };
@@ -200,6 +201,8 @@
 		CEC43FD01BD321580082DD3C /* radiusTile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = radiusTile.png; sourceTree = "<group>"; };
 		CEED63971D20530A0014BE97 /* couch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = couch.png; sourceTree = "<group>"; };
 		CEED639D1D207E830014BE97 /* Levels */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Levels; sourceTree = "<group>"; };
+		CEF85D311DDEC977003CCBC6 /* TouchGridWrapper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TouchGridWrapper.cpp; sourceTree = "<group>"; };
+		CEF85D321DDEC977003CCBC6 /* TouchGridWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TouchGridWrapper.h; sourceTree = "<group>"; };
 		D44C620B132DFF330009C878 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		D44C620D132DFF430009C878 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		D44C620F132DFF4E0009C878 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -343,17 +346,19 @@
 			isa = PBXGroup;
 			children = (
 				CE94C20B1D20935B009359D8 /* rapidjson */,
+				CEA875951B6D8EF100A217A7 /* Defs.h */,
 				46880B8419C43A87006E1F66 /* AppDelegate.cpp */,
 				46880B8519C43A87006E1F66 /* AppDelegate.h */,
 				46880B8619C43A87006E1F66 /* MainScene.cpp */,
 				46880B8719C43A87006E1F66 /* MainScene.h */,
-				CEA875951B6D8EF100A217A7 /* Defs.h */,
 				CEAAA9671B6E9D700070ED4E /* World.cpp */,
 				CEAAA9681B6E9D700070ED4E /* World.h */,
 				CEC43FCC1BD2CC800082DD3C /* GameStateManager.cpp */,
 				CEC43FCD1BD2CC800082DD3C /* GameStateManager.h */,
 				CEA875891B671A0400A217A7 /* GameObject.cpp */,
 				CEA8758A1B671A0400A217A7 /* GameObject.h */,
+				CEF85D311DDEC977003CCBC6 /* TouchGridWrapper.cpp */,
+				CEF85D321DDEC977003CCBC6 /* TouchGridWrapper.h */,
 				CEA875921B6D8E0D00A217A7 /* Grid.cpp */,
 				CEA875931B6D8E0D00A217A7 /* Grid.h */,
 				CEA875961B6D949F00A217A7 /* Actor.cpp */,
@@ -578,6 +583,7 @@
 				CE113FD31DCE9974003602C0 /* Vision.cpp in Sources */,
 				CEC43FCE1BD2CC800082DD3C /* GameStateManager.cpp in Sources */,
 				CEA8759B1B6D94B200A217A7 /* ActorController.cpp in Sources */,
+				CEF85D331DDEC977003CCBC6 /* TouchGridWrapper.cpp in Sources */,
 				CEA875981B6D949F00A217A7 /* Actor.cpp in Sources */,
 				503AE10017EB989F00D1A890 /* AppController.mm in Sources */,
 				CEAAA9691B6E9D700070ED4E /* World.cpp in Sources */,

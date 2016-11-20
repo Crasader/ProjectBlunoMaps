@@ -9,8 +9,6 @@
 #ifndef ____PlayerController__
 #define ____PlayerController__
 
-#include <stdio.h>
-#include "Defs.h"
 #include "ActorController.h"
 
 class Actor;
