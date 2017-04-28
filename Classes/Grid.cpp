@@ -25,6 +25,7 @@ Grid::Grid(Vector2 startingPoint, float xLength, float yLength)
             tile->setColor(0, 0, 0);
             Vector2 pt = getTileCoordCenterIso(m_totalTiles);
             tile->setPosition(pt);
+            tile->isAGameObject();
             m_allTiles.insert( std::pair<int, GameObject *>(m_totalTiles,tile) );
             world->addGameObject(tile);
             m_grid[i][j] = m_totalTiles++;

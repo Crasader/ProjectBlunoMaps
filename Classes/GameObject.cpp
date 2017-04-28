@@ -8,7 +8,10 @@
 
 #include "GameObject.h"
 
-GameObject::GameObject() {}
+GameObject::GameObject()
+{
+    m_avatar = Sprite::create();
+}
 
 
 void GameObject::setPosition(float x, float y)
@@ -78,6 +81,16 @@ void GameObject::setRotation(float rad)
 Sprite* GameObject::getAvatar()
 {
     return m_avatar;
+}
+
+void GameObject::isAGameObject()
+{
+    m_avatar->setCameraMask((unsigned short)cocos2d::CameraFlag::USER2);
+}
+
+void GameObject::isAHUDObject()
+{
+     m_avatar->setCameraMask((unsigned short)cocos2d::CameraFlag::DEFAULT);
 }
  
 void GameObject::update(float t)

@@ -24,7 +24,7 @@ typedef cocos2d::Vec3 Vector3;
 typedef cocos2d::Mat4 Matrix;
 //cocos2d misc
 typedef cocos2d::Color3B Color;
-
+typedef cocos2d::Rect Rect;
 //std defs
 
 #endif

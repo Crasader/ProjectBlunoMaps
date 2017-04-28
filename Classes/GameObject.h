@@ -31,6 +31,8 @@ public:
     void    setScale(float x, float y) override;
     void    setAnchorPoint(Vector2);
     void    setRotation(float rad) override;
+    void    isAGameObject();
+    void    isAHUDObject();
     
     Vector2 getPosition();
     Sprite* getAvatar();

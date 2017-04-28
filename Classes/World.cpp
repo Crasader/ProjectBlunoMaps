@@ -31,6 +31,7 @@ float World::RouteTimer = 0.0f;
 float World::ZoomFactor = 0.0f;
 float World::MaxZoomIn = 0.0f;
 float World::MaxZoomOut = 0.0f;
+
 //
 
 
@@ -38,6 +39,8 @@ using namespace rapidjson;
 
 void World::loadLevel(std::string filename)
 {
+    auto visibleSize = Director::getInstance()->getVisibleSize();
+    
     FILE *pFile = fopen(filename.c_str(), "r");
     char buffer[65536];
     FileReadStream is(pFile, buffer, sizeof(buffer));
@@ -45,7 +48,6 @@ void World::loadLevel(std::string filename)
     Document document;
     document.ParseStream<kParseStopWhenDoneFlag>(is);
     
-    cocos2d::Size visibleSize = Director::getInstance()->getVisibleSize();
     Vector2 origin = Director::getInstance()->getVisibleOrigin();
     
     {
@@ -59,6 +61,7 @@ void World::loadLevel(std::string filename)
         grid = new Grid(Vector2(startingPtX, startingPtY), lenghtX, lenghtY);
         grid->setAvatar(image, 0.1f ,opacity);
         grid->setPosition(Vector2(visibleSize.width/2 + origin.x, visibleSize.height/2 + origin.y));
+        grid->isAGameObject();
         this->addObject(grid);
         
         //Set Wrapper
@@ -81,6 +84,7 @@ void World::loadLevel(std::string filename)
         obj->setScale(scaleX, scaleY);
         Vector2 pt = grid->getTileCoordCenterIso(coord);
         obj->setPosition(pt);
+        obj->isAGameObject();
         this->addObject(obj);
     }
     
@@ -116,6 +120,7 @@ void World::loadLevel(std::string filename)
         guard->setPosition(pt);
         guard->setScale(scaleX, scaleY);
         guard->setAnchorPoint(Vector2(anchorPtX, anchorPtY));
+        guard->isAGameObject();
         this->addObject(guard);
         
         Vision *vision = new Vision(visionHeight, visionRadius, visionDirection);
@@ -123,7 +128,8 @@ void World::loadLevel(std::string filename)
         vision->setPosition(pt);
         vision->setScale(visionScaleX, visionScaleY);
         vision->setRotation(visionDirection);
-
+        vision->isAGameObject();
+        
         guard->setVision(vision);
         this->addObject(vision);
         ++m_numberOfGuards;
@@ -145,6 +151,7 @@ void World::loadLevel(std::string filename)
         player->setPosition(pt);
         player->setScale(scaleX, scaleY);
         player->setAnchorPoint(Vector2(anchorPtX, anchorPtY));
+        player->isAGameObject();
         this->addObject(player);
     }
     
@@ -177,7 +184,7 @@ void World::loadConfig(std::string filename)
 
 void World::update(float dt)
 {
-    grid->update(dt);
+    //grid->update(dt);
     
     for(std::vector<GameObject *>::iterator itr = m_gameObjectList.begin(); itr != m_gameObjectList.end(); ++itr)
     {

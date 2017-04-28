@@ -12,8 +12,12 @@
 #include "GameStateManager.h"
 
 Actor::Actor(ActorController *controller, int actorType, int startingTile, float speed) :
-m_controller (controller), m_actorType (actorType), m_startingTile(startingTile), m_reachedFlg(true), m_speed(speed)
+m_controller (controller), m_actorType (actorType), m_startingTile(startingTile), m_speed(speed)
 {
+    m_rotSpeed = 0;
+    m_rotateTo = 0;
+    m_reachedFlg = true;
+    m_rotatedFlg = true;
     m_vision = nullptr;
 }
 
@@ -37,6 +41,13 @@ int Actor::getStartingTile()
     return m_startingTile;
 }
 
+void Actor::update(float dt)
+{
+    m_controller->update(*this, dt);
+    if(m_vision != nullptr)
+        m_vision->update(dt);
+}
+
 void Actor::move(float dt)
 {
     m_reachedFlg = false;
@@ -56,11 +67,26 @@ void Actor::move(float dt)
     }
 }
 
-void Actor::update(float dt)
+void Actor::rotate(float dt)
 {
-    m_controller->update(*this, dt);
+    m_rotatedFlg = false;
+    
+    // Rotate the vision over duration.
     if(m_vision != nullptr)
-        m_vision->update(dt);
+    {
+        float degree = m_vision->getRotation();
+        
+        degree += m_rotSpeed *dt;
+        m_vision->setRotation(degree);
+        
+        if( (fabsf(degree - m_rotateTo) <= 0.5) )
+        {
+            float degree = (int)(m_rotateTo + 0.5f) % 360;
+            m_vision->setRotation(degree);
+            m_rotatedFlg = true;
+        }
+    }
+    
 }
 
 void Actor::setMoveTo(Vector2 position)
@@ -71,9 +97,21 @@ void Actor::setMoveTo(Vector2 position)
     m_reachedFlg = false;
 }
 
+void Actor::rotateBy(float degree, float speed)
+{
+    m_rotSpeed = speed;
+    m_rotateTo = m_vision->getRotation() + degree;
+    m_rotatedFlg = false;
+}
+
 bool Actor::reachedToDestination()
 {
     return m_reachedFlg;
+}
+
+bool Actor::rotatedToDestination()
+{
+    return m_rotatedFlg;
 }
 
 Actor::~Actor()

@@ -48,18 +48,40 @@ void GameStateManager::updateToNextState()
         case PLAYER_MOVING:
         {
             m_guardsCount = World::getInstance()->getGuardsCount();
-            m_gameState = GUARD_TURN_BEGIN;
+            m_gameState = GUARD_TURN_ROTATING_BEGIN;
             break;
         }
-        case GUARD_TURN_BEGIN:
+        case GUARD_TURN_ROTATING_BEGIN:
         {
             --m_guardsCount;
             if(m_guardsCount <= 0)
             {
                  m_guardsCount = World::getInstance()->getGuardsCount();
-                 m_gameState = GUARD_MOVING;
+                 m_gameState = GUARD_ROTATING;
             }
 
+            break;
+        }
+        case GUARD_ROTATING:
+        {
+            --m_guardsCount;
+            if(m_guardsCount <= 0)
+            {
+                m_guardsCount = World::getInstance()->getGuardsCount();
+                m_gameState = GUARD_TURN_MOVING_BEGIN;
+            }
+            
+            break;
+        }
+        case GUARD_TURN_MOVING_BEGIN:
+        {
+            --m_guardsCount;
+            if(m_guardsCount <= 0)
+            {
+                m_guardsCount = World::getInstance()->getGuardsCount();
+                m_gameState = GUARD_MOVING;
+            }
+            
             break;
         }
         case GUARD_MOVING:

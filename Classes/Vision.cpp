@@ -53,3 +53,8 @@ void Vision::setRotation(float rad)
     m_direction = rad;
     m_avatar->setRotation(rad);
 }
+
+float Vision::getRotation()
+{
+    return m_direction;
+}

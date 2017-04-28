@@ -41,7 +41,7 @@
             "visionImage": "visionCone.png",
             "visionHeight":153,
             "visionRadius":65.36,
-            "visionDirection":60.0,
+            "visionDirection":240.0,
             "visionOpacity":200.0,
             "visionScaleX":3,
             "visionScaleY":3
@@ -60,11 +60,30 @@
             "visionImage": "visionCone.png",
             "visionHeight":153,
             "visionRadius":65.36,
+            "visionDirection":330.0,
+            "visionOpacity":200.0,
+            "visionScaleX":3,
+            "visionScaleY":3
+        },
+        {
+            "image": "Guard1.png",
+            "opacity":255,
+            "scaleX":0.3,
+            "scaleY":0.3,
+            "anchorPtX":0.5,
+            "anchorPtY":0.2,
+            "speed":0.5,
+            "type":2,
+            "coord":19,
+            "visionImage": "visionCone.png",
+            "visionHeight":153,
+            "visionRadius":65.36,
             "visionDirection":150.0,
             "visionOpacity":200.0,
             "visionScaleX":3,
             "visionScaleY":3
         }
+
      ],
     
     "Obstacles":
@@ -83,6 +102,18 @@
                "scaleY":0.5,
                "coord":27
                }
-    ]
+    ],
+    
+    "UI":
+    [
+     {
+     "image": "FartEnabled.png",
+     "opacity": 255,
+     "scaleX":0.2,
+     "scaleY":0.2,
+     "offsetX":300,
+     "offsetY":50
+     }
+     ]
 }
 

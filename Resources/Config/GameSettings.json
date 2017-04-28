@@ -8,7 +8,9 @@
           "RouteTimer":5.0,
           "ZoomFactor":0.5,
           "MaxZoomIn":200.0,
-          "MaxZoomOut":800.0
+          "MaxZoomOut":800.0,
+          "UIheight":200.0
       }
+    
 }
 

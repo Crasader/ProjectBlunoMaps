@@ -61,6 +61,11 @@
 		BF171245129291EC00B8313A /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB012928DE900B8313A /* OpenGLES.framework */; };
 		BF1712471292920000B8313A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB412928DE900B8313A /* libz.dylib */; };
 		BF1C47F01293687400B63C5D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF1C47EA1293683800B63C5D /* QuartzCore.framework */; };
+		CE05C4A81DE9752D00B6ADEF /* FartDisabled.png in Resources */ = {isa = PBXBuildFile; fileRef = CE05C4A61DE9752D00B6ADEF /* FartDisabled.png */; };
+		CE05C4A91DE9752D00B6ADEF /* FartEnabled.png in Resources */ = {isa = PBXBuildFile; fileRef = CE05C4A71DE9752D00B6ADEF /* FartEnabled.png */; };
+		CE05C4AC1DE9758500B6ADEF /* UIManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CE05C4AA1DE9758500B6ADEF /* UIManager.cpp */; };
+		CE08A06C1EA989390089E021 /* Ability.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CE08A06A1EA989390089E021 /* Ability.cpp */; };
+		CE08A06E1EB2E2880089E021 /* fartSign.png in Resources */ = {isa = PBXBuildFile; fileRef = CE08A06D1EB2E2880089E021 /* fartSign.png */; };
 		CE113FD01DCE91FE003602C0 /* visionCone.png in Resources */ = {isa = PBXBuildFile; fileRef = CE113FCF1DCE91FE003602C0 /* visionCone.png */; };
 		CE113FD31DCE9974003602C0 /* Vision.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CE113FD11DCE9974003602C0 /* Vision.cpp */; };
 		CE113FD61DD018FB003602C0 /* AJ.png in Resources */ = {isa = PBXBuildFile; fileRef = CE113FD51DD018FB003602C0 /* AJ.png */; };
@@ -172,6 +177,13 @@
 		BF170DB012928DE900B8313A /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		BF170DB412928DE900B8313A /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		BF1C47EA1293683800B63C5D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		CE05C4A61DE9752D00B6ADEF /* FartDisabled.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FartDisabled.png; sourceTree = "<group>"; };
+		CE05C4A71DE9752D00B6ADEF /* FartEnabled.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FartEnabled.png; sourceTree = "<group>"; };
+		CE05C4AA1DE9758500B6ADEF /* UIManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIManager.cpp; sourceTree = "<group>"; };
+		CE05C4AB1DE9758500B6ADEF /* UIManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIManager.h; sourceTree = "<group>"; };
+		CE08A06A1EA989390089E021 /* Ability.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Ability.cpp; sourceTree = "<group>"; };
+		CE08A06B1EA989390089E021 /* Ability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Ability.h; sourceTree = "<group>"; };
+		CE08A06D1EB2E2880089E021 /* fartSign.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fartSign.png; sourceTree = "<group>"; };
 		CE113FCF1DCE91FE003602C0 /* visionCone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = visionCone.png; sourceTree = "<group>"; };
 		CE113FD11DCE9974003602C0 /* Vision.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Vision.cpp; sourceTree = "<group>"; };
 		CE113FD21DCE9974003602C0 /* Vision.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vision.h; sourceTree = "<group>"; };
@@ -324,6 +336,9 @@
 		46880B7519C43A67006E1F66 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				CE08A06D1EB2E2880089E021 /* fartSign.png */,
+				CE05C4A61DE9752D00B6ADEF /* FartDisabled.png */,
+				CE05C4A71DE9752D00B6ADEF /* FartEnabled.png */,
 				CE113FD51DD018FB003602C0 /* AJ.png */,
 				CEED63971D20530A0014BE97 /* couch.png */,
 				CE113FCF1DCE91FE003602C0 /* visionCone.png */,
@@ -351,18 +366,22 @@
 				46880B8519C43A87006E1F66 /* AppDelegate.h */,
 				46880B8619C43A87006E1F66 /* MainScene.cpp */,
 				46880B8719C43A87006E1F66 /* MainScene.h */,
+				CE05C4AA1DE9758500B6ADEF /* UIManager.cpp */,
+				CE05C4AB1DE9758500B6ADEF /* UIManager.h */,
+				CEF85D311DDEC977003CCBC6 /* TouchGridWrapper.cpp */,
+				CEF85D321DDEC977003CCBC6 /* TouchGridWrapper.h */,
 				CEAAA9671B6E9D700070ED4E /* World.cpp */,
 				CEAAA9681B6E9D700070ED4E /* World.h */,
 				CEC43FCC1BD2CC800082DD3C /* GameStateManager.cpp */,
 				CEC43FCD1BD2CC800082DD3C /* GameStateManager.h */,
 				CEA875891B671A0400A217A7 /* GameObject.cpp */,
 				CEA8758A1B671A0400A217A7 /* GameObject.h */,
-				CEF85D311DDEC977003CCBC6 /* TouchGridWrapper.cpp */,
-				CEF85D321DDEC977003CCBC6 /* TouchGridWrapper.h */,
 				CEA875921B6D8E0D00A217A7 /* Grid.cpp */,
 				CEA875931B6D8E0D00A217A7 /* Grid.h */,
 				CEA875961B6D949F00A217A7 /* Actor.cpp */,
 				CEA875971B6D949F00A217A7 /* Actor.h */,
+				CE08A06A1EA989390089E021 /* Ability.cpp */,
+				CE08A06B1EA989390089E021 /* Ability.h */,
 				CEA875991B6D94B200A217A7 /* ActorController.cpp */,
 				CEA8759A1B6D94B200A217A7 /* ActorController.h */,
 				CEA4DFE31D68006B00E56C93 /* GuardController.cpp */,
@@ -527,6 +546,7 @@
 				CEED639E1D207E830014BE97 /* Levels in Resources */,
 				5087E78617EB970100C73F5D /* Icon-76.png in Resources */,
 				5087E77F17EB970100C73F5D /* Default@2x.png in Resources */,
+				CE08A06E1EB2E2880089E021 /* fartSign.png in Resources */,
 				50EF629917ECD46A001EB2F8 /* Icon-100.png in Resources */,
 				CEC43FD11BD321580082DD3C /* radiusTile.png in Resources */,
 				5087E78317EB970100C73F5D /* Icon-152.png in Resources */,
@@ -540,6 +560,7 @@
 				521A8EA919F11F5000D177D7 /* fonts in Resources */,
 				CEED63981D20530A0014BE97 /* couch.png in Resources */,
 				50EF62A317ECD613001EB2F8 /* Icon-50.png in Resources */,
+				CE05C4A81DE9752D00B6ADEF /* FartDisabled.png in Resources */,
 				5087E78017EB970100C73F5D /* Icon-114.png in Resources */,
 				50EF62A217ECD613001EB2F8 /* Icon-29.png in Resources */,
 				50EF629617ECD46A001EB2F8 /* Icon-40.png in Resources */,
@@ -554,6 +575,7 @@
 				46880B7B19C43A67006E1F66 /* CloseNormal.png in Resources */,
 				CE94C20C1D20935B009359D8 /* rapidjson in Resources */,
 				50EF629717ECD46A001EB2F8 /* Icon-58.png in Resources */,
+				CE05C4A91DE9752D00B6ADEF /* FartEnabled.png in Resources */,
 				CE113FD01DCE91FE003602C0 /* visionCone.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -577,6 +599,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE08A06C1EA989390089E021 /* Ability.cpp in Sources */,
 				46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */,
 				46880B8A19C43A87006E1F66 /* MainScene.cpp in Sources */,
 				CEA8758B1B671A0400A217A7 /* GameObject.cpp in Sources */,
@@ -584,6 +607,7 @@
 				CEC43FCE1BD2CC800082DD3C /* GameStateManager.cpp in Sources */,
 				CEA8759B1B6D94B200A217A7 /* ActorController.cpp in Sources */,
 				CEF85D331DDEC977003CCBC6 /* TouchGridWrapper.cpp in Sources */,
+				CE05C4AC1DE9758500B6ADEF /* UIManager.cpp in Sources */,
 				CEA875981B6D949F00A217A7 /* Actor.cpp in Sources */,
 				503AE10017EB989F00D1A890 /* AppController.mm in Sources */,
 				CEAAA9691B6E9D700070ED4E /* World.cpp in Sources */,

@@ -10,11 +10,13 @@ class MainScene : public Layer
 private:
     Vector2 m_oldSingleTouch, m_newSingleTouch;
     float m_oldDistanceMultiTouch, m_newDistanceMultiTouch;
+    bool m_firstTimeSetup;
     
 public:
-
+   
     static cocos2d::Scene* createScene();
 
+    cocos2d::Camera *gameCamera;
     virtual bool init() override;
       
     bool onTouchBegan(cocos2d::Touch*, cocos2d::Event*) override;
@@ -28,6 +30,7 @@ public:
     
     CREATE_FUNC(MainScene);
     
+    bool setup();
     void update(float) override;
 };
 

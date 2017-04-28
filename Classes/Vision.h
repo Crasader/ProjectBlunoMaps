@@ -25,6 +25,7 @@ public:
 
     Vision(float height, float radius, float direction);
     void setRotation(float rad);
+    float getRotation();
     virtual void update(float);
     
     //virtual ~Vision();

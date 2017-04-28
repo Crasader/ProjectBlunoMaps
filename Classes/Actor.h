@@ -14,10 +14,10 @@
 enum ActorType
 {
     PLAYER = 0,
-    STILL_GUARD,
-    ROTATING_GUARD,
-    MOVE_DOWN_THREE_BLOCKS_GUARD,
-    MOVE_LEFT_THREE_BLOCKS_GUARD
+    STILL_GUARD = 1,
+    ROTATING_GUARD = 2,
+    MOVE_DOWN_THREE_BLOCKS_GUARD = 3,
+    MOVE_LEFT_THREE_BLOCKS_GUARD = 4
 };
 
 class Vision;
@@ -33,24 +33,33 @@ private:
     Vector2         m_moveToPt;
     Vector2         m_distance;
     float           m_speed;
+    float           m_rotSpeed;
+    float           m_rotateTo;
     int             m_actorType;
     int             m_startingTile;
+    
     ActorController *m_controller;
     Vision          *m_vision;
+    
     bool            m_reachedFlg;
+    bool            m_rotatedFlg;
     
 public:
     Actor(ActorController *, int, int, float);
     
     void    changeController(ActorController *);
-    void    move(float dt);
     void    setMoveTo(Vector2);
-    bool    reachedToDestination();
-    
+    void    rotateBy(float degree, float speed);
     void    setVision(Vision *vision);
+    
+    void    move(float dt);
+    void    rotate(float dt);
     
     int     getActorType();
     int     getStartingTile();
+    
+    bool    reachedToDestination();
+    bool    rotatedToDestination();
     
     virtual void update(float);
     virtual ~Actor();

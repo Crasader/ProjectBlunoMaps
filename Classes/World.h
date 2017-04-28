@@ -37,6 +37,7 @@ public:
 private:
    
     Scene    *m_scene;
+   
     std::vector<GameObject *> m_tempAddObjects;
     std::vector<GameObject *> m_tempRemoveObjects;
     std::vector<GameObject *> m_gameObjectList;
@@ -82,13 +83,20 @@ private:
     inline void addObject(GameObject* object)
     {
         m_gameObjectList.push_back(object);
-        m_scene->addChild(object->getAvatar(), 1);
+        m_scene->addChild(object->getAvatar(), 0);
     }
     
     inline void removeObject(GameObject* object)
     {
         m_scene->removeChild(object->getAvatar());
     }
+    
+    inline void addHUDObject(GameObject* object)
+    {
+        m_gameObjectList.push_back(object);
+        m_scene->addChild(object->getAvatar(), 1);
+    }
+    
     
 public:
     
